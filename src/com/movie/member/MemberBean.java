@@ -1,13 +1,23 @@
 package com.movie.member;
 
 public class MemberBean {
+	private int user_num;
 	private String user_id;
 	private String user_pw;
 	private String user_name;
+	private String user_nickname;
 	private String user_email;
 	private String zonecode;
 	private String addr;
 	
+	
+	
+	public int getUser_num() {
+		return user_num;
+	}
+	public void setUser_num(int user_num) {
+		this.user_num = user_num;
+	}
 	public String getUser_id() {
 		return user_id;
 	}
@@ -25,6 +35,12 @@ public class MemberBean {
 	}
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
+	}
+	public String getUser_nickname() {
+		return user_nickname;
+	}
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
 	}
 	public String getUser_email() {
 		return user_email;
@@ -44,12 +60,11 @@ public class MemberBean {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	
-	
 	@Override
 	public String toString() {
-		return "MemberBean [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", user_email="
-				+ user_email + ", zonecode=" + zonecode + ", addr=" + addr + "]";
+		return "MemberBean [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name
+				+ ", user_nickname=" + user_nickname + ", user_email=" + user_email + ", zonecode=" + zonecode
+				+ ", addr=" + addr + "]";
 	}
 	
 	

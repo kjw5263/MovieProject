@@ -7,8 +7,8 @@
 		type="javax.sql.DataSource"
 		driverClassName="com.mysql.jdbc.Driver"
 		username="root"
-		password="1234"
-		url="jdbc:mysql://localhost:3306/jspdb"
+		password="wldnjs12"
+		url="jdbc:mysql://localhost:3306/MovieProject"
 		maxWait="5000"
 	/>
 </context>

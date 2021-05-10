@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -44,10 +45,10 @@ public class MemberDAO {
 			System.out.println("[MemberDAO] conn : " + conn);
 		} catch (NamingException e) {
 			System.out.println("[MemberDAO] getConn() : " + e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 		} catch (SQLException e) {
 			System.out.println("[MemberDAO] getConn() : " + e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		return conn;
@@ -71,12 +72,13 @@ public class MemberDAO {
 	
 	
 	/* loginCheck() : 로그인 체크 메소드 */
-	public int loginCheck(MemberBean memberBean) {
+	public ArrayList<Object> loginCheck(MemberBean memberBean) {
 		int result = -1;
+		ArrayList<Object> arr = new ArrayList<Object>();
 		
 		try {
 			conn = getConnection();
-			sql = "select pw from user_info where id=?";
+			sql = "select user_pw, user_nickname from user_info where user_id=?";
 			pstmt = conn.prepareStatement(sql);		// 예외 발생 가능
 			
 			pstmt.setString(1, memberBean.getUser_id());
@@ -89,27 +91,150 @@ public class MemberDAO {
 				
 				// 입력받은 비번과 DB저장 비번이 같을 때 >> 로그인 성공 (1)
 				if(memberBean.getUser_pw().equals(rs.getString("user_pw"))) {
+					
 					result = 1;
+					arr.add(result);
+					arr.add(rs.getString("user_nickname"));
+					
 				}
 				// 입력받은 비번과 DB저장비번이 다를 때 >> 비번 틀림 (0)
 				else {
 					result = 0;
+					arr.add(result);
 				}
 			}
 			// rs.next() 없을 때 : 비회원 (-1)
 			else {
 				result = -1;
+				arr.add(result);
 			}
-			
-			
 		} catch (SQLException e) {
 			System.out.println("[MemberDAO] loginCheck() : " + e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
+		} finally {
+			closeDB();
 		}
 		
+		return arr;
+	}
+	
+	
+	
+	/* IDdup_Check() : 회원가입 중 아이디 중복 체크 */
+	public int IDdup_Check(String user_id) {
+		int result = 0;
 		
+		try {
+			conn = getConnection();
+			sql = "select * from user_info where user_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			
+			
+			if(rs.next()) {
+				// 아이디가 존재할 때 
+				result = 1;
+			} else {
+				// 아이디 존재하지 않을 때 -> 사용가능
+				result = 0;
+			}
+		} catch (SQLException e) {
+			System.out.println("[MemberDAO] IDdup_Check : " + e.getMessage());
+			//e.printStackTrace();
+		} finally {
+			closeDB();
+		}
 		
 		return result;
 	}
+	
+	
+	/* EMdup_Check() : 회원가입중 이메일 중복 체크 */
+	public int EMdup_Check(String user_email){
+		int result = 0;
+		
+		try {
+			conn = getConnection();
+			sql = "select * from user_info where user_email=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, user_email);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				// 이메일 존재할 때
+				result = 1;
+			} else {
+				// 이메일 존재하지 않을 때 -> 이메일 사용가능
+				result = 0;
+			}
+		} catch (SQLException e) {
+			System.out.println("[MemberDAO] EMdup_check : " + e.getMessage());;
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		return result;
+	}
+	
+	
+	/* UserJoin() : 회원가입 메소드 */
+	public void UserJoin(MemberBean memberBean) {
+		int num = 1;
+		
+		try {
+			conn = getConnection();
+			sql = "select max(user_num) from user_info";
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				num = rs.getInt(1)+1;
+			}
+			
+			System.out.println("user_num 값 : " + num);
+			
+			sql = "insert into user_info values (?,?,?,?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, num);
+			pstmt.setString(2, memberBean.getUser_id());
+			pstmt.setString(3, memberBean.getUser_pw());
+			pstmt.setString(4, memberBean.getUser_name());
+			pstmt.setString(5, memberBean.getUser_nickname());
+			pstmt.setString(6, memberBean.getUser_email());
+			pstmt.setString(7, memberBean.getZonecode());
+			pstmt.setString(8, memberBean.getAddr());
+			
+			pstmt.executeUpdate();
+			System.out.println("[MemberDAO] UserJoin() 회원등록 성공! ");
+			
+			
+		} catch (SQLException e) {
+			System.out.println("[MemberDAO] UserJoin() : " + e.getMessage());
+			//e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		
+	}
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
