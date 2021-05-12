@@ -4,6 +4,7 @@ public class MemberBean {
 	private int user_num;
 	private String user_id;
 	private String user_pw;
+	private String user_pw_check;
 	private String user_name;
 	private String user_nickname;
 	private String user_email;
@@ -60,12 +61,24 @@ public class MemberBean {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
+	
+	
+	public String getUser_pw_check() {
+		return user_pw_check;
+	}
+	public void setUser_pw_check(String user_pw_check) {
+		this.user_pw_check = user_pw_check;
+	}
 	@Override
 	public String toString() {
-		return "MemberBean [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name
-				+ ", user_nickname=" + user_nickname + ", user_email=" + user_email + ", zonecode=" + zonecode
-				+ ", addr=" + addr + "]";
+		return "MemberBean [user_num=" + user_num + ", user_id=" + user_id + ", user_pw=" + user_pw + ", user_pw_check="
+				+ user_pw_check + ", user_name=" + user_name + ", user_nickname=" + user_nickname + ", user_email="
+				+ user_email + ", zonecode=" + zonecode + ", addr=" + addr + "]";
 	}
+	
+	
+	
+	
 	
 	
 	

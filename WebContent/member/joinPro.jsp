@@ -17,7 +17,7 @@
   	// 주소 + 일반주소 합치기
   	String addr = request.getParameter("addr");
   	String addr_detail = request.getParameter("addr_detail");
-  	addr = addr + " " + addr_detail;
+  	addr = addr + "+" + addr_detail;
   	
   
   %>

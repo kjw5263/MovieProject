@@ -20,7 +20,9 @@
 
 
 <%
-	// joinForm.jsp에서 받아온 아이디 값 받기
+	request.setCharacterEncoding("UTF-8");	
+
+// joinForm.jsp에서 받아온 아이디 값 받기
 	String user_id = request.getParameter("user_id");
 
 	MemberDAO mdao = new MemberDAO();

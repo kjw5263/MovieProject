@@ -221,7 +221,184 @@ public class MemberDAO {
 		
 	}
 	
+	
+	
+	
+	/* checkBeforeInfo() : 회원정보 조회 전, 본인확인으로 비밀번호 확인하기*/
+	public MemberBean checkBeforeInfo(MemberBean memberBean) {
+		MemberBean mb = null;
+		
+		try {
+			conn = getConnection();
+			sql = "select * from user_info where user_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberBean.getUser_id());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				// 아이디 일치한 계정이 있을 때,
+				// 내가 입력한 비번과 비번이 같을 때-> 정상적으로 적었을 
+				if(memberBean.getUser_pw().equals(rs.getString("user_pw"))) {
+					mb = new MemberBean();
+					mb.setUser_num(rs.getInt("user_num"));
+					mb.setUser_id(rs.getString("user_id"));
+					mb.setUser_name(rs.getString("user_name"));
+					mb.setUser_nickname(rs.getString("user_nickname"));
+					mb.setUser_email(rs.getString("user_email"));
+					mb.setZonecode(rs.getString("zonecode"));
+					mb.setAddr(rs.getString("addr"));
+				
+					System.out.println("[MemberDAO.java] checkBeforeInfo() : 회원정보 읽어오기 완료 ");
+					System.out.println("[MemberDAO.java] checkBeforeInfo() : " + mb.toString());
+						
+				} else {
+					// 아이디에 해당하는 정보는 있지만
+					// 비밀번호 틀렸을 때 
+					System.out.println("[MemberDAO.java] checkBeforeInfo() : 비밀번호 틀림 ");
+				}
+			} else {
+				System.out.println("[MemberDAO.java] checkBeforeInfo() : 해당 정보 없음 ");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("[MemberDAO.java] checkBeforeInfo() : " + e.getMessage());
+			//e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		return mb;
+	}
+	
+	
+	
 
+	/* updateInfo() : 회원정보 수정 메소드 */
+	public int updateInfo(MemberBean memberBean) {
+		int result = -1;
+			
+		try {
+			// 아이디값을 가지고 사용자 비교하기
+			conn = getConnection();
+			sql = "select * from user_info where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, memberBean.getUser_id());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				// 해당하는 아이디가 있을 때! 입력한 비번 맞는지 확인하기
+				if(rs.getString("user_pw").equals(memberBean.getUser_pw())) {
+					// 해당하는 아이디가 맞고, 비번이 맞을 때 -> 수정해주기
+						sql = "update user_info set user_name=?, user_nickname=?, zonecode=?, addr=? where user_id=?";
+						pstmt = conn.prepareStatement(sql);
+						pstmt.setString(1, memberBean.getUser_name());
+						pstmt.setString(2, memberBean.getUser_nickname());
+						pstmt.setString(3, memberBean.getZonecode());
+						pstmt.setString(4, memberBean.getAddr());
+						pstmt.setString(5, memberBean.getUser_id());
+						pstmt.executeUpdate();
+						result = 1;
+				} else {
+					System.out.println("[MemberDAO.java] updateInfo() : 비밀번호 틀림");
+					result = 0;			// 회원은 맞으나 비밀번호 틀린 경우 
+				}
+			} else {
+				System.out.println("[MemberDAO.java] updateInfo() : 해당 정보 없음");
+				result = -1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("[MemberDAO] updateInfo() : " + e.getMessage());
+		} finally {
+			closeDB();
+		}
+		
+		
+		return result;
+	}
+	
+	
+	/*  updatePassInfo() : 비밀번호 변경 메소드 */
+	public int updatePassInfo(MemberBean memberBean) {
+		int result = -1;
+		
+		try {
+			conn = getConnection();
+			sql = "select * from user_info where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberBean.getUser_id());
+			System.out.println("사용자 아이디느??  " + memberBean.getUser_id());
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getString("user_pw").equals(memberBean.getUser_pw())) {
+					// 비밀번호 일치하기 때문에 변경해주기
+					sql = "update user_info set user_pw=? where user_id=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, memberBean.getUser_pw_check());
+					pstmt.setString(2, memberBean.getUser_id());
+					pstmt.executeUpdate();
+					System.out.println("[MemberDAO.java] updatePassInfo() : 비밀번호 수정완료 ");
+					result = 1;
+				} else {
+					System.out.println("[MemberDAO.java] updatePassInfo() : 비밀번호 오류! 수정 실패 ");
+					result = 0;
+				}
+			} else {
+				System.out.println("[MemberDAO.java] updatePassInfo() : 회원 정보 없음 ");
+				result = -1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("[MemberDAO.java] updateInfo() : " + e.getMessage());
+		} finally {
+			closeDB();
+		}
+		
+		return result;
+	}
+
+	
+	/* deleteInfo() : 회원정보 삭제 메소드 */
+	public int deleteInfo(MemberBean memberBean) {
+		int result = -1;
+		
+		try {
+			conn = getConnection();
+			sql = "select * from user_info where user_id = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberBean.getUser_id());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				// 아이디 일치한 계정이 있을 때,
+				// 내가 입력한 비번과 비번이 같을 때-> 정상적으로 적었을 
+				if(memberBean.getUser_pw().equals(rs.getString("user_pw"))) {
+					sql = "delete from user_info where user_id=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, rs.getString("user_id"));
+					pstmt.executeUpdate();
+					result = 1;
+				} else {
+					// 아이디에 해당하는 정보는 있지만
+					// 비밀번호 틀렸을 때 
+					System.out.println("[MemberDAO.java] deleteInfo() : 비밀번호 틀림 ");
+					result = 0;
+				}
+			} else {
+				System.out.println("[MemberDAO.java] deleteInfo() : 해당 정보 없음 ");
+				result = -1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("[MemberDAO.java] deleteInfo() : " + e.getMessage());
+			//e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		return result;
+	}
 }
 
 

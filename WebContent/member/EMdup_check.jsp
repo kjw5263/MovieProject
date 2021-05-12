@@ -19,6 +19,7 @@
 <body>
 
 <%
+	request.setCharacterEncoding("UTF-8");
 	// joinForm.jsp에서 받아온 아이디 값 받기
 	String user_email = request.getParameter("user_email");
 

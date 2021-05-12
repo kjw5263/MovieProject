@@ -12,56 +12,37 @@
 <!--  다음 우편번호 API -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="../js/jquery-3.6.0.js"></script>
-<script>
-function openAddrPop() {
-    new daum.Postcode({
-        oncomplete: function(data) {
-            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+<script src="../js/address.js"></script>
 
-            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-            var fullAddr = ''; // 최종 주소 변수
-            var extraAddr = ''; // 조합형 주소 변수
-
-            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                fullAddr = data.roadAddress;
-
-            } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                fullAddr = data.jibunAddress;
-            }
-
-            // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
-            if(data.userSelectedType === 'R'){
-                //법정동명이 있을 경우 추가한다.
-                if(data.bname !== ''){
-                    extraAddr += data.bname;
-                }
-                // 건물명이 있을 경우 추가한다.
-                if(data.buildingName !== ''){
-                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-                // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-                fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
-            }
-
-            // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('zonecode').value = data.zonecode; //5자리 새우편번호 사용
-            document.getElementById('addr').value = fullAddr;
-
-            // 커서를 상세주소 필드로 이동한다.
-            document.getElementById('addr_detail').focus();
-        }
-    }).open();
-}
-</script>
-
-<!-- 아이디 중복체크, 이메일 중복체크, 비밀번호 확인 여부 체크 -->
+<!-- 팝업 : 아이디 중복체크, 이메일 중복체크, 비밀번호 확인 여부 체크 -->
 <script src="../js/joinCheck.js"></script>
 
-<!-- 회원가입 항목 입력 여부 체크 -->
+
 <script type="text/javascript">
 
+<!-- 비밀번호 일치여부 -->
+$(function(){
+	$('input[type=password]').keyup(function(){
+		var p1 = $("#user_pw").val();
+		var p2 = $("#user_pw_check").val();
+		if(p1 != "" || p2 != "" ){
+			if(p1.length < 8){
+				$("#alert-passcheck").html("비밀번호는 8~16자리로 입력해야 합니다.");
+				$("#alert-passcheck").css('color', 'red');
+			} else if (p1 == p2){
+				$("#alert-passcheck").html("비밀번호가 일치합니다.");
+				$("#alert-passcheck").css('color', 'green');
+			} else if (p1 != p2){
+				$("#alert-passcheck").html("비밀번호가 일치하지 않습니다.");
+				$("#alert-passcheck").css('color', 'red');
+			} 
+		}
+		
+	});
+	
+});
+
+<!-- 회원가입 항목 입력 여부 체크 -->
 function submitCheck() {
 	var pw1 = document.joinfr.user_pw.value;
 	var pw2 = document.joinfr.user_pw_check.value;
@@ -77,9 +58,16 @@ function submitCheck() {
 	if(pw1== "" || pw2==""){
 		alert("비밀번호는 필수입력 항목입니다.");
 		return false;
-	}else if(pw1 != pw2){
+	}
+	if(pw1 != pw2){
 		alert("비밀번호가 일치하지 않습니다.");
-	} else if (pw1.indexOf(" ") != -1){
+		return false;
+	}
+	if(pw1.length < 8 || pw2.length < 8){
+		alert("비밀번호는 최소 8자 이상 입력해야 합니다.");
+		return false;
+	}
+	if (pw1.indexOf(" ") != -1){
 		alert("비밀번호에 공백을 포함할 수 없습니다.");
 		pw1.trim();
 		return false;

@@ -1,23 +1,3 @@
-$(function(){
-	$('input[type=password]').keyup(function(){
-		var p1 = $("#user_pw").val();
-		var p2 = $("#user_pw_check").val();
-		if(p1 != "" || p2 != "" ){
-			if(p1.length < 8){
-				$("#alert-passcheck").html("비밀번호는 8~16자리로 입력해야 합니다.");
-				$("#alert-passcheck").css('color', 'red');
-			} else if (p1 == p2){
-				$("#alert-passcheck").html("비밀번호가 일치합니다.");
-				$("#alert-passcheck").css('color', 'green');
-			} else if (p1 != p2){
-				$("#alert-passcheck").html("비밀번호가 일치하지 않습니다.");
-				$("#alert-passcheck").css('color', 'red');
-			} 
-		}
-		
-	});
-	
-});
 
 // 작업창을 제외한 화면 크기 구하기 : screen.availWidth
 		// 중앙에 띄우기 위해 2로 나눈다
@@ -60,3 +40,4 @@ function EMdup_check() {
 		window.open('EMdup_check.jsp?user_email='+email, '이메일 중복체크', 'width='+width+', height='+ height + ', left='+ ScreenWidth+', top=' + ScreenHeight);
 }
 	
+

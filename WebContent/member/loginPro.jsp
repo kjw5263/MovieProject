@@ -1,4 +1,3 @@
-
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.movie.member.MemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -16,6 +15,7 @@
 	
 		String user_id = request.getParameter("user_id");
 		String user_pw = request.getParameter("user_pw");
+		System.out.println(user_id + "/ "+user_pw);
 		
 		
 	%>
@@ -28,7 +28,13 @@
 	<%
 		
 		MemberDAO mdao = new MemberDAO();
-		ArrayList<Object> result = mdao.loginCheck(memberBean);
+		ArrayList<Object> result = new ArrayList<Object>();
+		result = mdao.loginCheck(memberBean);
+		if(result != null){
+			for(int i=0; i<result.size(); i++){
+				System.out.println(result.get(i));
+			}
+		}
 		System.out.println(memberBean.toString());
 		System.out.println(memberBean.getUser_id());
 		
