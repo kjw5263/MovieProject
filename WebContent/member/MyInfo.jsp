@@ -160,8 +160,8 @@ function onDelete() {
 	if(mb == null){
 		%>
 			<script type="text/javascript">
-				alert("회원 정보를 불러오지 못했습니다. 다시 시도해주세요.");
-				history.back();
+				alert("잘못된 접근입니다. 다시 시도해주세요.");
+				location.href="main.jsp";
 			</script>
 		<%
 	} else if(mb != null ){
@@ -236,6 +236,8 @@ function onDelete() {
 	}
 		
 %>
+
+<input type="button" value="메인으로" onclick="location.href='main.jsp'">
 		
 		
 </body>

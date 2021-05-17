@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+div #index {
+	background-image: url("../img/popcorn.jpg");
+	background-position: center 50px;	
+}

@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+* {
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #dddddd;
+}
+
+nav li{
+	display: inline;
+	float:left;
+}
+
+nav a {
+  text-decoration: none;
+  display: block;
+  padding: 8px;
+  background-color: #dddddd;
+}
+
+
+footer {
+	color : lightgrey;
+}
+
+
+
+footer hr{
+	border-bottom: 0px;
+	text-align : center;
+	color : lightgrey;
+}
+
+footer #copy {
+	margin: 30px 10px 10px 10px;
+	
+}
+
+
+footer #social {
+	margin: 10px 10px 10px 10px;
+}

@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마무다(MAMUDA) 로그인</title>
-<link href="css/font.css" rel="stylesheet">
+<link href="css/default.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 
@@ -32,6 +32,10 @@ function login_Check() {
 </script>
 </head>
 <body>
+
+
+
+
 <h1> 로그인 </h1>
 
    <form action="loginPro.jsp" method="post" name="login_fr" onsubmit="return login_Check()">
