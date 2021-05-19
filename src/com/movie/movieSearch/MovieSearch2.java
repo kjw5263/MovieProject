@@ -4,33 +4,36 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
-public class MovieSearch {
+public class MovieSearch2 {
 
 
-    public String searchMovie(String keyword, int pageNum){
+    public static void main(String[] args){
+    	//MovieItem mItem = null;
+    	//ArrayList<MovieItem> arr = new ArrayList<MovieItem>();
         String clientId = "Kyfh22pzlli_1dQYrgkl"; //애플리케이션 클라이언트 아이디값"
         String clientSecret = "rWZw6ljF9q"; //애플리케이션 클라이언트 시크릿값"
 
 
         String text = null;
-        int start = 0;
-        start = (pageNum-1) * 10 + 1;
         try {
-            text = URLEncoder.encode(keyword, "UTF-8");
+            text = URLEncoder.encode("너의", "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException("검색어 인코딩 실패",e);
         }
 
 
-        String apiURL = "https://openapi.naver.com/v1/search/movie.json?query="+text+ "&start=" + start;    // json 결과
+        String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + text + "&start=5";    // json 결과
         //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
 
 
@@ -39,10 +42,33 @@ public class MovieSearch {
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL,requestHeaders);
 
-
+        
         System.out.println(responseBody);
         
-        return responseBody;
+        /*
+        JsonParser jsonParser = new JsonParser();
+        JsonElement element = jsonParser.parse(responseBody);
+        JsonObject jsonObject = element.getAsJsonObject();
+        
+
+        // 에러코드가 있을 때 -> 에러 발생 !
+        if(jsonObject.has("errorCode") || jsonObject.has("erroMessage")) {
+        	System.out.println(jsonObject.get("errorCode").getAsString() +"///" + jsonObject.get("errorMessage").getAsString());
+        }
+        // 에러코드가 없을 때 -> 검색은 성공!
+        else if(responseBody.contains("lastBuildDate")){
+        	JsonArray jArray = jsonObject.get("items").getAsJsonArray();
+        	
+        	// 검색 결과가 없을 때
+        	if(jArray.size() == 0) {
+        		System.out.println("검색에는 성공했지만, 검색 결과가 없어요.");
+        	}else {
+        		
+        	}
+        	
+        }
+       */
+        //return responseBody;
         
         
     }
