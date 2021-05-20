@@ -32,26 +32,35 @@
 		for(var i=0; i<chkRadio.length;i++){
 			if(chkRadio[i].checked == true){
 				chk_cnt++;
-				alert(table.rows[i+1].cells[1].innerText);
-				alert(table.rows[i+1].cells[2].querySelector('img').src);
-				alert(table.rows[i+1].cells[3].innerText);
-				//alert(table.rows[2].cells[3].innerText);
-				//var cells = rows[i].getElementsByTagName("td");
-				//var cell_1 = cells[3].firstChild.data;
-				//var cell_1 = rows[i].getElementById("pubDate").innertText;
-				//var cell_2 =rows[i].getElementById("title").innertText;
-				 //console.log(cell_1);	// 행번호
-			      //console.log(cell_2);	// 제작연도
-			      //console.log(cell_3);	// 남자,여자
-			     // console.log(cell_4);	// 제목 정보
+				
+				// 라디오 버튼 선택한 행의 영화 정보들
+				var pubDate = table.rows[i+1].cells[1].innerText;	// 제작연도
+				var imgLink = table.rows[i+1].cells[2].querySelector('img').src;	// 이미지 주소
+				var movieLink = table.rows[i+1].cells[3].querySelector('a').href;	// 영화 정보 주소 
+				var movieData = table.rows[i+1].cells[3].innerText;						// 영화 정보
+				var okCheck = confirm("영화 정보 : "+ movieData +"\n"+
+						"제작연도 : " + pubDate +"\n를 선택하시겠습니까?");
+				if(okCheck == true){
+					// 선택 했을 때, 창을 닫으면서 writeForm 페이지에 데이터 전달해주고 싶을 때
+					opener.document.getElementById("pubDate").value = pubDate;
+					//opener.document.getElemenyById("movieLink").value= movieLink;
+					opener.document.getElementById("imgLink").src=imgLink;
+					opener.document.getElementById("imgLink").value=imgLink;
+					opener.document.getElementById("movieData").value = movieData;
+					window.close();
+				} else{
+					
+				} 
+				
 			}
 		}
 		
+		// 영화 선택하지 않고 제출 눌렀을 때
 		if(chk_cnt<1){
 			alert("영화를 선택해주세요.");
 			return false;
 		}
-		//window.close();
+		
 	}
 
 
@@ -86,15 +95,19 @@
 		<tbody id="result_tbody">
 	<% 
 	
+		// 검색창에 검색어가 있을 때,
 		if(request.getParameter("query") != null){
 			query = request.getParameter("query");
 			if(request.getParameter("pageNum")!=null){
 				pageNum = Integer.parseInt(request.getParameter("pageNum"));
 			}
 			
+			// 쿼리문과 페이지 정보를 넘겨준다 
 			MovieSearch mSearch = new MovieSearch();
 			String result = mSearch.searchMovie(query, pageNum);
 			
+			
+			// String형태의 Json데이터를 파싱한다.
 			JSONParser parser = new JSONParser();
 	        JSONObject jsonObject = (JSONObject)parser.parse(result);
 	        
@@ -103,6 +116,9 @@
 	        if(jsonObject.isEmpty()) {
 	        %> null입니다. <%
 	        }
+	        
+	        
+	        ////검색어에 이상없이 검색이 됐을 때
 	        if(jsonObject.containsKey("lastBuildDate")) {
 	        	// 전체 검색 결과 개수
 	        	int total = Integer.parseInt(String.valueOf(jsonObject.get("total")));
@@ -115,9 +131,11 @@
 	        	
 	        	
 	        	
-	 	       
+	 	        // 영화 정보 객체 내부에 배열
 		        JSONArray jsonArray = null;
 	        	jsonArray = (JSONArray)jsonObject.get("items");
+	        	
+	        	// 검색어에 대한 결과가 없을 때
 	        	if(jsonArray.size() == 0){
 	        		%>
 	        			<tr>
@@ -127,36 +145,60 @@
 	        		<%
 	        	} 
 	        	
+	        	// 검색 결과가 있을 때
 	        	else {
 	        		JSONObject jsonItem = null;
 	        		String title = "";
+	        		String subtitle="";
 	        		String img ="";
+	        		String link ="";
 	        		String pubDate="";
 	        		String director="";
 	        		String actor="";
+	        		String userRating="";
 	        		for(int i=0; i<jsonArray.size(); i++){
 	        			jsonItem = (JSONObject)jsonArray.get(i);
 	        			title = jsonItem.get("title").toString();
+	        			subtitle = jsonItem.get("subtitle").toString();
 	        			img = jsonItem.get("image").toString();
+	        			link = jsonItem.get("link").toString();
 	        			pubDate = jsonItem.get("pubDate").toString();
 	        			director = jsonItem.get("director").toString();
 	        			actor= jsonItem.get("actor").toString();
+	        			userRating = jsonItem.get("userRating").toString();
 	        			if(img == ""){
 	        				img = "../img/unnamed.png";
 	        			}
+	        			if(subtitle == ""){
+	        				subtitle = "부제 정보없음";
+	        			}
+	        			if(pubDate == ""){
+	        				pubDate = "제작년도 정보없음";
+	        			}
+	        			if(director == ""){
+	        				director ="감독 정보없음";
+	        			}
+	        			if(actor == ""){
+	        				actor = "배우 정보없음";
+	        			}
+	        			if(userRating ==""){
+	        				userRating = "평점 정보없음";
+	        			}
+	        			
 	        			%>
 	        			
 	        			<tr id="result_tr">
 							  <td id="startRow"><%=startRow+i %></td>
 							  <td id="pubDate"><%=pubDate %></td>
 							  <td id="img"><img id="imgLink" src="<%=img%>"></td>
-							  <td id="title"><%=title +"<br>" + director + "<br>" + actor%></td>
-							  <td><input type="radio"  value="밸류값입니다" name="radioSelect"></td>
+							  <td id="title"><a id="movieLink" href="<%=link%>" target="_blank"><%=title %></a><br><%="("+subtitle+ ")<br>"+director + "<br>" + actor+"<br>" + userRating%></td>
+							  <td><input type="radio"  value="" name="radioSelect" ></td>
 						</tr>
 						
 						
 	        			  <%
 	        		}
+	        		
 	        		%>
 						</tbody>
 						</table>
@@ -167,6 +209,8 @@
 	        	
 	        	
 
+	        	
+	        	/**************화면 페이지 계산*************/
 	        	if(total!= 0){
 	        		// 전체 페이지 개수 + 맨 뒤에 10개가 안되는 데이터들을 출력할지 여부
 	        		int pageCount = total / 10 + (total % 10 == 0? 0:1);

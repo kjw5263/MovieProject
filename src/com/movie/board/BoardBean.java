@@ -1,7 +1,8 @@
 package com.movie.board;
 
-public class BoardListBean {
+public class BoardBean {
 	private int board_num;
+	private String selectType;
 	private String title;
 	private String content;
 	private String user_id;
@@ -11,12 +12,24 @@ public class BoardListBean {
 	private int re_lev;
 	private int re_seq;
 	private String ip;
-	private String file;
+	private String fileName;
+	
+	private String pubDate;
+	private String imgLink;
+	private String movieData;
+	
 	public int getBoard_num() {
 		return board_num;
 	}
 	public void setBoard_num(int board_num) {
 		this.board_num = board_num;
+	}
+	
+	public String getSelectType() {
+		return selectType;
+	}
+	public void setSelectType(String selectType) {
+		this.selectType = selectType;
 	}
 	public String getTitle() {
 		return title;
@@ -72,18 +85,45 @@ public class BoardListBean {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	public String getFile() {
-		return file;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setFile(String file) {
-		this.file = file;
+	public void setFileName(String file) {
+		this.fileName = file;
 	}
+	
+	
+	
+	public String getPubDate() {
+		return pubDate;
+	}
+	public void setPubDate(String pubDate) {
+		this.pubDate = pubDate;
+	}
+	public String getImgLink() {
+		return imgLink;
+	}
+	public void setImgLink(String imgLink) {
+		this.imgLink = imgLink;
+	}
+	public String getMovieData() {
+		return movieData;
+	}
+	public void setMovieData(String movieData) {
+		this.movieData = movieData;
+	}
+
 	@Override
 	public String toString() {
-		return "BoardListBean [board_num=" + board_num + ", title=" + title + ", content=" + content + ", user_id="
-				+ user_id + ", date=" + date + ", readcount=" + readcount + ", re_ref=" + re_ref + ", re_lev=" + re_lev
-				+ ", re_seq=" + re_seq + ", ip=" + ip + ", file=" + file + "]";
+		return "BoardBean [board_num=" + board_num + ", selectType=" + selectType + ", title=" + title + ", content="
+				+ content + ", user_id=" + user_id + ", date=" + date + ", readcount=" + readcount + ", re_ref="
+				+ re_ref + ", re_lev=" + re_lev + ", re_seq=" + re_seq + ", ip=" + ip + ", fileName=" + fileName
+				+ ", pubDate=" + pubDate + ", imgLink=" + imgLink + ", movieData="
+				+ movieData + "]";
 	}
+	
+	
+	
 	
 	
 	
