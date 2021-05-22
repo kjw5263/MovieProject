@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보 조회</title>
+<link href="../css/default.css" rel="stylesheet" type="text/css">
 <!-- 다음 우편번호 조회 API -->
 <script src="../js/jquery-3.6.0.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -134,7 +135,14 @@ function onDelete() {
 
 </head>
 <body>
-<%
+
+
+<header>
+	<div class="logo"><a href="main.jsp"><img src="../img/movie.png"></a></div>
+	
+	</header>
+	
+	<%
 	request.setCharacterEncoding("UTF-8");
 	String user_id = (String)session.getAttribute("user_id");
 	String user_nickname = (String)session.getAttribute("user_nickname");
@@ -147,6 +155,29 @@ function onDelete() {
 	}
 
 %>
+	
+	<a href="logout.jsp">로그아웃</a>
+
+<a href="beforeMyInfo.jsp">회원정보 조회</a>
+<nav>
+	<ul>
+		<li><a href="main.jsp">HOME</a></li>
+		<li><a href="../board/boardList.jsp">리뷰게시판</a></li>
+		<li><a href="#">무슨게시판</a></li>
+		<li><a href="#">Contact Us</a></li>
+	</ul>
+</nav>
+
+<br><br>
+	<nav>
+		<ul>
+		  <li id="list1"><span>회원정보 수정</span></li>
+		  <li id="list2"><span>비밀번호 변경</span></li>
+		  <li id="list3"><span>회원 탈퇴</span></li>
+		</ul>
+		</nav>
+	
+
 
 
 	<jsp:useBean id="memberBean" class="com.movie.member.MemberBean"/>
@@ -173,11 +204,6 @@ function onDelete() {
 		System.out.println("[MyInfo22222] 아이디/닉넴 세션 : " +user_id + "/" + user_nickname);
 		%>
 		
-		<ul>
-		  <li id="list1">회원정보 수정</li>
-		  <li id="list2">비밀번호 변경</li>
-		  <li id="list3">회원 탈퇴</li>
-		</ul>
 		
 		
 		<br><br><br><br><br><br>
@@ -237,8 +263,25 @@ function onDelete() {
 		
 %>
 
+
+<div class="goMain">
 <input type="button" value="메인으로" onclick="location.href='main.jsp'">
-		
+</div>
+
+
+
+	<footer>
+	
+	<hr>
+	<div id="copy">
+	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
+	 Copyright (c) 2021. Ma Movie Diary. All rights reserved <br>
+	 </div>
+	<div id="social">
+	<a href="https://www.instagram.com/ddi5niii/"><img src="../img/instagram-2.png" alt="instagram" ></a>
+	<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
+	</div>
+	</footer>
 		
 </body>
 </html>

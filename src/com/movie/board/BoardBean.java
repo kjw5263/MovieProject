@@ -16,6 +16,7 @@ public class BoardBean {
 	
 	private String pubDate;
 	private String imgLink;
+	private String movieLink;
 	private String movieData;
 	
 	public int getBoard_num() {
@@ -112,15 +113,23 @@ public class BoardBean {
 	public void setMovieData(String movieData) {
 		this.movieData = movieData;
 	}
+	
 
+	public String getMovieLink() {
+		return movieLink;
+	}
+	public void setMovieLink(String movieLink) {
+		this.movieLink = movieLink;
+	}
 	@Override
 	public String toString() {
 		return "BoardBean [board_num=" + board_num + ", selectType=" + selectType + ", title=" + title + ", content="
 				+ content + ", user_id=" + user_id + ", date=" + date + ", readcount=" + readcount + ", re_ref="
 				+ re_ref + ", re_lev=" + re_lev + ", re_seq=" + re_seq + ", ip=" + ip + ", fileName=" + fileName
-				+ ", pubDate=" + pubDate + ", imgLink=" + imgLink + ", movieData="
+				+ ", pubDate=" + pubDate + ", imgLink=" + imgLink + ", movieLink=" + movieLink + ", movieData="
 				+ movieData + "]";
 	}
+	
 	
 	
 	

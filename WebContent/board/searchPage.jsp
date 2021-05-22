@@ -10,6 +10,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>영화 검색 페이지</title>
+<link href="../css/content.css" rel="stylesheet" type="text/css">
+<link href="../css/default.css" rel="stylesheet" type="text/css">
 <script src="../js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
 	
@@ -42,11 +44,14 @@
 						"제작연도 : " + pubDate +"\n를 선택하시겠습니까?");
 				if(okCheck == true){
 					// 선택 했을 때, 창을 닫으면서 writeForm 페이지에 데이터 전달해주고 싶을 때
-					opener.document.getElementById("pubDate").value = pubDate;
-					//opener.document.getElemenyById("movieLink").value= movieLink;
-					opener.document.getElementById("imgLink").src=imgLink;
 					opener.document.getElementById("imgLink").value=imgLink;
+					opener.document.getElementById("pubDate").value = pubDate;
+					opener.document.getElementById("movieLink").value=movieLink;
 					opener.document.getElementById("movieData").value = movieData;
+					
+					opener.document.getElementById("img").src = imgLink;
+					opener.document.getElementById("pubDate-div").innerText = pubDate;
+					opener.document.getElementById("movieData-div").innerText = movieData;
 					window.close();
 				} else{
 					
@@ -82,17 +87,7 @@
 	
 	<br><br><br>
 	
-	<table id="result-table" border="1">
-		<thead>
-			<tr>
-			  <td>번호</td>
-			  <td>제작연도</td>
-			  <td>포스터 이미지</td>
-			  <td>영화 정보</td>
-			  <td>선택</td>
-			</tr>
-		</thead>
-		<tbody id="result_tbody">
+	
 	<% 
 	
 		// 검색창에 검색어가 있을 때,
@@ -120,6 +115,22 @@
 	        
 	        ////검색어에 이상없이 검색이 됐을 때
 	        if(jsonObject.containsKey("lastBuildDate")) {
+	        	%>
+	        	<table id="result-table" border="1">
+		<thead>
+			<tr>
+			  <td>번호</td>
+			  <td>제작연도</td>
+			  <td>포스터 이미지</td>
+			  <td>영화 정보</td>
+			  <td>선택</td>
+			</tr>
+		</thead>
+		<tbody id="result_tbody">
+	        	
+	        	<%
+	        	
+	        	
 	        	// 전체 검색 결과 개수
 	        	int total = Integer.parseInt(String.valueOf(jsonObject.get("total")));
 	        	// 시작 행 
@@ -163,11 +174,11 @@
 	        			img = jsonItem.get("image").toString();
 	        			link = jsonItem.get("link").toString();
 	        			pubDate = jsonItem.get("pubDate").toString();
-	        			director = jsonItem.get("director").toString();
-	        			actor= jsonItem.get("actor").toString();
+	        			director = jsonItem.get("director").toString().replace("|", " ");
+	        			actor= jsonItem.get("actor").toString().replace("|"," ");
 	        			userRating = jsonItem.get("userRating").toString();
 	        			if(img == ""){
-	        				img = "../img/unnamed.png";
+	        				img = "../img/unnamed.jpeg";
 	        			}
 	        			if(subtitle == ""){
 	        				subtitle = "부제 정보없음";
@@ -193,6 +204,7 @@
 							  <td id="img"><img id="imgLink" src="<%=img%>"></td>
 							  <td id="title"><a id="movieLink" href="<%=link%>" target="_blank"><%=title %></a><br><%="("+subtitle+ ")<br>"+director + "<br>" + actor+"<br>" + userRating%></td>
 							  <td><input type="radio"  value="" name="radioSelect" ></td>
+							  
 						</tr>
 						
 						
@@ -265,7 +277,6 @@
 		} 
 		
 	%>
-	<br><br>
 	<input type="button" value="닫기" onclick="window.close()">
 	<br><br>
 	

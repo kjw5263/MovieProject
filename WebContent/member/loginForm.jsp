@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마무다(MAMUDA) 로그인</title>
-<link href="css/default.css" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 
@@ -34,7 +34,10 @@ function login_Check() {
 <body>
 
 
-
+<header>
+	<div class="logo"><img src="../img/movie.png"></div>
+	
+</header>
 
 <h1> 로그인 </h1>
 
@@ -50,5 +53,28 @@ function login_Check() {
    	
    
    </form>
+   
+   
+   
+   
+   
+   
+   
+   	<footer>
+	
+	<hr>
+	<div id="copy">
+	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
+	 Copyright (c) 2021. Ma Movie Diary. All rights reserved <br>
+	 </div>
+	<div id="social">
+	<a href="https://www.instagram.com/ddi5niii/"><img src="../img/instagram-2.png" alt="instagram" ></a>
+	<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
+	</div>
+	</footer>
+	
+	
+	
+	
 </body>
 </html>

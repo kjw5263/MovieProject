@@ -7,29 +7,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>리뷰 게시판</title>
+<link href="../css/default.css" rel="stylesheet" type="text/css">
+<link href="../css/boardList.css" rel="stylesheet" type="text/css">
 <script src="../js/jquery-3.6.0.js"></script>
 <script type="text/javascript">
 
 </script>
 </head>
 <body>
+
+<header>
+	<div class="logo"><a href="../member/main.jsp"><img src="../img/movie.png"></a></div>
+	
+	</header>
+	
+	<nav>
+	<ul>
+		<li><a href="../member/main.jsp">HOME</a></li>
+		<li><a href="#">리뷰게시판</a></li>
+		<li><a href="#">무슨게시판</a></li>
+		<li><a href="#">Contact Us</a></li>
+	</ul>
+</nav>
+
+<div id="left">
 	<%
 		request.setCharacterEncoding("UTF-8");
 		String user_id = (String)session.getAttribute("user_id");
 		System.out.println("[boardList.jsp] 아이디 세션 : " + user_id);
-// 		if(user_id == null){
-// 			System.out.println("[boardList.jsp] 로그인 세션 만료");
-// 			response.sendRedirect("loginForm.jsp");
-// 			session.invalidate();
-// 		}
+		if(user_id == null){
+			System.out.println("[boardList.jsp] 로그인 세션 만료");
+			response.sendRedirect("../member/loginForm.jsp");
+			session.invalidate();
+		}
 		
-//		else if(user_id != null){
+		else if(user_id != null){
 			System.out.println("[boardList.jsp] 로그인 세션 있음");
-			%>
+	%> 
 				<input type="button" value="글쓰기" onclick="location.href='writeForm.jsp'">
 			<%
-//		}
+		}
 
 
 		BoardDAO bdao = new BoardDAO();
@@ -50,8 +68,8 @@
 		ArrayList boardList = bdao.getBoardList(startRow, pageSize);
 
 	%>
-		<table border="1">
-			<tr>
+		<table>
+			<tr class="table-title">
 				<td>번호</td>
 				<td>유형</td>
 				<td>제목</td>
@@ -66,18 +84,22 @@
 			%>
 				<tr>
 					<td><%=bb.getBoard_num() %></td>
-					<td><%=bb.getSelectType() %></td>
+					<td>
+						<%if(bb.getSelectType().equals("1")) {%> 추천해요
+						<%} else if(bb.getSelectType().equals("0")){ %>그저그래요
+						<%} else if(bb.getSelectType().equals("-1")) {%> 별로예요
+						<% }%></td>
 					<td>
 						<%
-							int wid = 0;
-							if(bb.getRe_lev() > 0){
-								wid = 15 * bb.getRe_lev();
+							//int wid = 0;
+							//if(bb.getRe_lev() > 0){
+								//wid = 15 * bb.getRe_lev();
 						%>
-						<img src="level.gif" height="15" width="<%=wid %>">
-						<img src="re.gif">
+<%-- 						<img src="level.gif" height="15" width="<%=wid %>"> --%>
+<!-- 						<img src="re.gif"> -->
 						<%
 						
-							}
+							//}
 						%>
 						<a href="content.jsp?board_num=<%=bb.getBoard_num() %>&pageNum=<%=pageNum %>"><%=bb.getTitle() %></a>
 						
@@ -93,8 +115,6 @@
 	%>
 	</table>
 	
-	<hr>
-	
 	<%
 		////////////////////////////////////////////////////
 		// 페이징 처리 - 하단부 페이지 링크
@@ -106,7 +126,7 @@
 			int pageCount = cnt/pageSize + (cnt % pageSize == 0? 0:1);
 			
 			// 한 화면에 보여줄 페이지 번호의 개수 (페이지 블록 )
-			int pageBlock = 2;
+			int pageBlock = 1;
 			
 			// 페이지 블럭의 시작페이지 번호
 			// ex) 1~10 페이지 : 1, 11~20페이지 : 11, 21~20 패이지 : 21
@@ -140,7 +160,7 @@
 			// 다음 (기존의 페이지 블럭보다 페이지의 수가 많을 때)
 			if(endPage <  pageCount) {
 				%>
-				<a href="BoardList.jsp?pageNum=<%=startPage + pageBlock%>">[다음]</a>
+				<a href="boardList.jsp?pageNum=<%=startPage + pageBlock%>">[다음]</a>
 				<%
 				
 			}
@@ -148,5 +168,27 @@
 		}
 	%>
 	
+	</div>
+	
+	
+	<div id="right">
+	
+	
+	
+	</div>
+	
+	
+		<footer>
+	
+	<hr>
+	<div id="copy">
+	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
+	 Copyright (c) 2021. Ma Movie Diary. All rights reserved <br>
+	 </div>
+	<div id="social">
+	<a href="https://www.instagram.com/ddi5niii/"><img src="../img/instagram-2.png" alt="instagram" ></a>
+	<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
+	</div>
+	</footer>
 </body>
 </html>

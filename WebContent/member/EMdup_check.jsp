@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>이메일 중복체크</title>
+<link href="../css/default.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 	function emailFix() {
 		opener.document.joinfr.user_email.value = document.ofr.user_email.value;

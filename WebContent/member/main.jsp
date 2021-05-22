@@ -11,6 +11,11 @@
 </head>
 <body>
 
+<header>
+	<div class="logo"><a href="main.jsp"><img src="../img/movie.png"></a></div>
+	
+	</header>
+
 <%
 	request.setCharacterEncoding("UTF-8");
 	String user_id = (String)session.getAttribute("user_id");
@@ -31,7 +36,7 @@
 <a href="logout.jsp">로그아웃</a>
 
 <a href="beforeMyInfo.jsp">회원정보 조회</a>
-<h5><%=user_nickname %>님, 환영합니다.</h5>
+<h4><%=user_nickname %>님, 환영합니다.</h4>
 <nav>
 	<ul>
 		<li><a href="main.jsp">HOME</a></li>
@@ -42,7 +47,18 @@
 </nav>
 
 
-
+<footer>
+	
+	<hr>
+	<div id="copy">
+	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
+	 Copyright (c) 2021. Ma Movie Diary. All rights reserved <br>
+	 </div>
+	<div id="social">
+	<a href="https://www.instagram.com/ddi5niii/"><img src="../img/instagram-2.png" alt="instagram" ></a>
+	<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
+	</div>
+	</footer>
 
 
 </body>

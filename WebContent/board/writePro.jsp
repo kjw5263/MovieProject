@@ -13,6 +13,7 @@
 		String selectType = request.getParameter("selectType");
 		String pubDate = request.getParameter("pubDate");
 		String imgLink = request.getParameter("imgLink");
+		String movieLink = request.getParameter("movieLink");
 		String movieData = request.getParameter("movieData");
 	%>
 	
@@ -25,9 +26,19 @@
 		System.out.println("글쓰기 정보 :" + boardBean.toString());
 		
 		BoardDAO bdao = new BoardDAO();
-		bdao.insertBoard(boardBean);
+		int result = bdao.insertBoard(boardBean);
 		
-		response.sendRedirect("boardList.jsp");
+		if (result == 1){
+			response.sendRedirect("boardList.jsp");
+		} else {
+			%>
+				<script type="text/javascript">
+					alert("글쓰기 실패 입니다.");
+					history.back();
+				</script>
+			<%
+		}
+		
 	%>
 	
 </body>

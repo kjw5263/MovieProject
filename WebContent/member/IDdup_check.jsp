@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>아이디 중복체크</title>
+<link href="../css/default.css" rel="stylesheet" type="text/css">
 <script type="text/javascript">
 	function idFix() {
 		opener.document.joinfr.user_id.value = document.ofr.user_id.value;

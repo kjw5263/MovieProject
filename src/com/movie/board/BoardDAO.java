@@ -71,7 +71,8 @@ public class BoardDAO {
 	
 	
 	/* insertBoard() : 게시판 글쓰기 메소드 */
-	public void insertBoard(BoardBean boardBean) {
+	public int insertBoard(BoardBean boardBean) {
+		int check = -1;
 		int board_num = 0;
 		try {
 			conn = getConnection();
@@ -91,7 +92,7 @@ public class BoardDAO {
 				}
 				System.out.println("글 번호 : "+ board_num);
 				//글번호,유형,제목,내용,사용자아이디,날짜now(),조회수,글ref,lev,seq,ip,file
-				sql = "insert into board_list values(?,?,?,?,?,now(),?,?,?,?,?,?,?,?,?)";
+				sql = "insert into board_list values(?,?,?,?,?,now(),?,?,?,?,?,?,?,?,?,?)";
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setInt(1, board_num);
@@ -108,10 +109,15 @@ public class BoardDAO {
 				pstmt.setString(12, boardBean.getPubDate());
 				pstmt.setString(13, boardBean.getImgLink());
 				pstmt.setString(14, boardBean.getMovieData());
+				pstmt.setString(15, boardBean.getMovieLink());
 				
-				pstmt.executeUpdate();
-				System.out.println("SQL 실행 완료 : 글쓰기 완료 ");
+				check = pstmt.executeUpdate();
 				
+				if(check == 1) {
+					System.out.println("SQL 실행 완료 : 글쓰기 완료 ");
+				}else{
+					System.out.println("SQL 글쓰기 실패 ");
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println("SQL 실행 실패 : 글쓰기 실패 " + e.getMessage());
@@ -121,7 +127,7 @@ public class BoardDAO {
 		}
 		
 		
-		
+		return check;
 	}
 	
 	
@@ -179,6 +185,7 @@ public class BoardDAO {
 				boardBean.setPubDate(rs.getString("pubDate"));
 				boardBean.setImgLink(rs.getString("imgLink"));
 				boardBean.setMovieData(rs.getString("movieData"));
+				boardBean.setMovieLink(rs.getString("movieLink"));
 				
 				arrList.add(boardBean);
 			}
@@ -226,6 +233,7 @@ public class BoardDAO {
 				boardBean.setPubDate(rs.getString("pubDate"));
 				boardBean.setImgLink(rs.getString("imgLink"));
 				boardBean.setMovieData(rs.getString("movieData"));
+				boardBean.setMovieLink(rs.getString("movieLink"));
 				
 				arrList.add(boardBean);
 			}
@@ -240,5 +248,125 @@ public class BoardDAO {
 		
 	}
 	
+	
+	
+	public BoardBean getBoard(int board_num) {
+		BoardBean boardBean = null;
+		
+		
+		try {
+			conn = getConnection();
+			sql = "select * from board_list where board_num =?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			rs= pstmt.executeQuery();
+			
+			if(rs.next()) {
+				boardBean = new BoardBean();
+				boardBean.setBoard_num(rs.getInt("board_num"));
+				boardBean.setSelectType(rs.getString("selectType"));
+				boardBean.setTitle(rs.getString("title"));
+				boardBean.setContent(rs.getString("content"));
+				boardBean.setUser_id(rs.getString("user_id"));
+				boardBean.setDate(rs.getString("date"));
+				boardBean.setReadcount(rs.getInt("readcount"));
+				boardBean.setFileName(rs.getString("file"));
+				boardBean.setPubDate(rs.getString("pubDate"));
+				boardBean.setImgLink(rs.getString("imgLink"));
+				boardBean.setMovieData(rs.getString("movieData"));
+				boardBean.setMovieLink(rs.getString("movieLink"));
+			}
+			
+			System.out.println("게시물 가져오기 성공!");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		
+		return boardBean;
+	}
+	
+	
+	
+	public int updateContent(BoardBean boardBean) {
+		int check = -1;
+		
+		try {
+			conn = getConnection();
+			sql = "select * from board_list where board_num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardBean.getBoard_num());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				if(boardBean.getUser_id().equals(rs.getString("user_id"))) {
+					sql = "update board_list set content=?, title=?, selectType=? where board_num=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, boardBean.getContent());
+					pstmt.setString(2, boardBean.getTitle());
+					pstmt.setString(3, boardBean.getSelectType());
+					pstmt.setInt(4, boardBean.getBoard_num());
+					
+					check = pstmt.executeUpdate();
+					
+				} else {
+					check =0;	//비번 틀렸을 경우
+				}
+			} else {
+				check = -1;	// 회원정보 없을 경우
+			}
+			
+			System.out.println(check);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		
+		return check;
+	}
+	
+	
+	// deleteContent() :게시물 삭제 
+	public int deleteContent(BoardBean boardBean) {
+		int check = -1;
+		
+		
+		try {
+			conn = getConnection();
+			sql = "select * from board_list where board_num=?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, boardBean.getBoard_num());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				if(rs.getString("user_id").equals(boardBean.getUser_id())) {
+					sql="delete from board_list where board_num=?";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, boardBean.getBoard_num());
+					check = pstmt.executeUpdate();
+				}
+				else {
+					check = 0;
+				}
+			} else {
+				
+			}
+			System.out.println("게시물 삭제 결과 : >>>>>>" + check);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		
+		return check;
+	}
 	
 }

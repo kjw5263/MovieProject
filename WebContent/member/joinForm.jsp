@@ -5,9 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마무다(MAMUDA) 회원가입</title>
-<link href="../css/font.css" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="../css/default.css" rel="stylesheet" type="text/css">
+
 
 <!--  다음 우편번호 API -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -113,7 +112,10 @@ function submitCheck() {
 </head>
 <body>
 	
+	<header>
+	<div class="logo"><a href="loginForm.jsp"><img src="../img/movie.png"></a></div>
 	
+</header>
 	
 	
 	<h2> 회원가입 </h2>
@@ -121,13 +123,14 @@ function submitCheck() {
 <!-- 	<input type="hidden" name="privacy_agree" value="1"> -->
 	<input type="text" name="user_id"  id="user_id" placeholder="아이디" >
 	<input type="button" value="중복확인" onclick="return IDdup_check()"><br>
+	<input type="text" name="user_email" id="user_email" placeholder="이메일">
+	<input type="button" value="중복확인" onclick="return EMdup_check()"><br><br>
 	<input type="text" name="user_name" id="user_name" placeholder="성명"><br>
 	<input type="password" name="user_pw" id="user_pw" placeholder="비밀번호"><br>
 	<input type="password" name="user_pw_check" id="user_pw_check" placeholder="비밀번호 확인">
 	<div id="alert-passcheck"></div>
 	<input type="text" name="user_nickname" id="user_nickname" placeholder="닉네임"><br>
-	<input type="text" name="user_email" id="user_email" placeholder="이메일">
-	<input type="button" value="중복확인" onclick="return EMdup_check()"><br><br>
+	
 	
 	<!-- 다음 우편번호 api -->
 	<input type="text" id="zonecode" name="zonecode" placeholder="우편번호" readonly>
@@ -135,7 +138,6 @@ function submitCheck() {
 	<input type="text" id="addr" name="addr" placeholder="주소" readonly> <br>
 	<input type="text" id="addr_detail" name="addr_detail" placeholder="상세주소"> <br><br>
 	
-	<hr>
 	
 	
 	
@@ -147,6 +149,21 @@ function submitCheck() {
 	
 	
 	</form>
+	
+	
+	
+	<footer>
+	
+	<hr>
+	<div id="copy">
+	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
+	 Copyright (c) 2021. Ma Movie Diary. All rights reserved <br>
+	 </div>
+	<div id="social">
+	<a href="https://www.instagram.com/ddi5niii/"><img src="../img/instagram-2.png" alt="instagram" ></a>
+	<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
+	</div>
+	</footer>
 	
 </body>
 </html>

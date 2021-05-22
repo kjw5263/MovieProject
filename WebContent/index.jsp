@@ -6,17 +6,32 @@
 <meta charset="UTF-8">
 <title> Welcome to MAMUDA ! </title>
 <link href="css/default.css" rel="stylesheet" type="text/css">
+<link href="css/indexpage.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
+	<header>
+	<div class="logo"><img src="img/movie.png"></div>
 	
+	</header>
+
 	
-	<div id="index">
+	<div class="back">
+	<div class="img"><img src="img/cinema.jpg"></div>
+	<div class="text">
+		<h1>영화와 추억을<br>기록하고 싶은 당신에게,</h1>
+		<h2>Ma Movie Diary</h2>
+		<input type="button" id="btn" value="로그인" onclick="location.href='member/loginForm.jsp'">
+		<input type="button" id="btn" value="회원가입" onclick="location.href='member/joinForm.jsp'">
+	</div>
 	
 	
 	</div>
-	<input type="button" value="로그인" onclick="location.href='member/loginForm.jsp'">
-	<input type="button" value="회원가입" onclick="location.href='member/joinForm.jsp'">
+	
+	
+	
+
+	
 	
 	
 	<footer>
