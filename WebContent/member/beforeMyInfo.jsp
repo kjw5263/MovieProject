@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>회원정보 조회 본인확인</title>
 <link href="../css/default.css" rel="stylesheet" type="text/css">
+<script src="../js/logoutCheck.js"></script>
 </head>
 <body>
 
@@ -32,7 +33,18 @@
 		
 	%>
 	
-	
+	<a id="logout" href="logout.jsp" onclick="return logoutCheck()">로그아웃</a> | 
+
+<a id="memberJoin" href="beforeMyInfo.jsp">회원정보 조회</a>
+<h4><%=user_nickname %>님, 환영합니다.</h4>
+<nav>
+	<ul>
+		<li><a href="main.jsp">HOME</a></li>
+		<li><a href="../board/boardList.jsp">리뷰게시판</a></li>
+		<li><a href="../board/theatherMap.html">영화관 검색</a></li>
+		<li><a href="#">Contact Us</a></li>
+	</ul>
+</nav>
 	
 	<h2>회원정보 조회 본인확인</h2>
 	<form action="MyInfo.jsp" method="post">
@@ -48,8 +60,7 @@
 	
 	
 	
-	
-		<footer>
+	<footer>
 	
 	<hr>
 	<div id="copy">

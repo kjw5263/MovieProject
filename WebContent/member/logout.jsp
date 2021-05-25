@@ -8,6 +8,8 @@
 </head>
 <body>
 
+
+
 <%
 
 	// 로그아웃 버튼 누를 시 세션 초기화 invalidate()

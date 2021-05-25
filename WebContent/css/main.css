@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+#logout #memberJoin{
+	color : lightgrey;
+}
+
+.posterImg {
+	width: 480px;
+	height: 680px;
+}
+
+.divPage{
+	margin-top:50px;
+	min-height: 700px;
+	height : 800px;
+}
+
+/* .howabout, */
+ .welcome { 
+	color : #ff7d78;
+}
+
+
+.slidePage li{
+	list-style-type: none;
+}

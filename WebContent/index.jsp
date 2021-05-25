@@ -12,7 +12,6 @@
 
 	<header>
 	<div class="logo"><img src="img/movie.png"></div>
-	
 	</header>
 
 	

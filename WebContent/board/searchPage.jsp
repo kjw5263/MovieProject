@@ -174,26 +174,33 @@
 	        			img = jsonItem.get("image").toString();
 	        			link = jsonItem.get("link").toString();
 	        			pubDate = jsonItem.get("pubDate").toString();
-	        			director = jsonItem.get("director").toString().replace("|", " ");
-	        			actor= jsonItem.get("actor").toString().replace("|"," ");
+	        			director = jsonItem.get("director").toString();
+	        			actor= jsonItem.get("actor").toString();
+        				if(director.endsWith("|")){
+	        				director = director.substring(0, director.length()-1);
+	        			}
+        				if(actor.endsWith("|")){
+	        				actor = actor.substring(0, actor.length()-1);
+	        			}
+	        			
+	        			director = director.replace("|", " | ");
+	        			actor= actor.replace("|"," | ");
 	        			userRating = jsonItem.get("userRating").toString();
+	        			
 	        			if(img == ""){
 	        				img = "../img/unnamed.jpeg";
 	        			}
-	        			if(subtitle == ""){
-	        				subtitle = "부제 정보없음";
-	        			}
 	        			if(pubDate == ""){
-	        				pubDate = "제작년도 정보없음";
+	        				pubDate = " 정보없음";
 	        			}
 	        			if(director == ""){
-	        				director ="감독 정보없음";
+	        				director =" 정보없음";
 	        			}
 	        			if(actor == ""){
-	        				actor = "배우 정보없음";
+	        				actor = " 정보없음";
 	        			}
 	        			if(userRating ==""){
-	        				userRating = "평점 정보없음";
+	        				userRating = " 정보없음";
 	        			}
 	        			
 	        			%>
@@ -202,7 +209,20 @@
 							  <td id="startRow"><%=startRow+i %></td>
 							  <td id="pubDate"><%=pubDate %></td>
 							  <td id="img"><img id="imgLink" src="<%=img%>"></td>
-							  <td id="title"><a id="movieLink" href="<%=link%>" target="_blank"><%=title %></a><br><%="("+subtitle+ ")<br>"+director + "<br>" + actor+"<br>" + userRating%></td>
+							  <%
+							  	if(subtitle == ""){
+							  		%>
+							  		<td id="title"><a id="movieLink" href="<%=link%>" target="_blank"><b><%=title %></b></a><%="<br>감독 - "+director + "<br>출연 - " + actor+"<br>평점 - " + userRating%></td>
+							  		<%
+							  	} else {
+							  		%>
+							  		<td id="title"><a id="movieLink" href="<%=link%>" target="_blank"><b><%=title %></b></a><%=" ("+subtitle+ ")<br>감독 - "+director + "<br>출연 - " + actor+"<br>평점 - " + userRating%></td>
+							  		<%
+							  	}
+							  
+							  %>
+							  
+							  
 							  <td><input type="radio"  value="" name="radioSelect" ></td>
 							  
 						</tr>

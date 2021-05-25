@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마무다(MAMUDA) 로그인</title>
 <link href="../css/default.css" rel="stylesheet">
+<link href="../css/login.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 
@@ -35,43 +36,32 @@ function login_Check() {
 
 
 <header>
-	<div class="logo"><img src="../img/movie.png"></div>
+	<div class="logo"><a href="../index.jsp"><img src="../img/movie.png"></a></div>
 	
 </header>
-
-<h1> 로그인 </h1>
-
+<div class="loginAll">
+<div class="loginTitle"><h1> 로그인 </h1></div>
+<div class="login-Form">
    <form action="loginPro.jsp" method="post" name="login_fr" onsubmit="return login_Check()">
    
    	<input type="text" name="user_id"  placeholder="아이디" >			<br>
    	<input type="password" name="user_pw"  placeholder="비밀번호" >		<br>
    	
-   	<input type="submit" value="로그인">		<br>
+   	<div class="loginButton"><input type="submit" value="로그인">	</div>
    	
-   	<p>처음 방문하셨나요? <a href="joinForm.jsp">회원가입</a></p>
+   	<div class="join-p-tag"><p>처음 방문하셨나요? <a href="joinForm.jsp">회원가입</a></p></div>
    	
    	
    
    </form>
    
+   </div>
+   
+   </div>
    
    
    
-   
-   
-   
-   	<footer>
-	
-	<hr>
-	<div id="copy">
-	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
-	 Copyright (c) 2021. Ma Movie Diary. All rights reserved <br>
-	 </div>
-	<div id="social">
-	<a href="https://www.instagram.com/ddi5niii/"><img src="../img/instagram-2.png" alt="instagram" ></a>
-	<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
-	</div>
-	</footer>
+   	<jsp:include page="../inc/footer.jsp" />
 	
 	
 	

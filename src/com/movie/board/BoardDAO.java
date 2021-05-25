@@ -181,7 +181,7 @@ public class BoardDAO {
 				boardBean.setRe_lev(rs.getInt("re_lev"));
 				boardBean.setRe_seq(rs.getInt("re_seq"));
 				boardBean.setIp(rs.getString("ip"));
-				boardBean.setFileName(rs.getString("file"));
+				boardBean.setFileName(rs.getString("fileName"));
 				boardBean.setPubDate(rs.getString("pubDate"));
 				boardBean.setImgLink(rs.getString("imgLink"));
 				boardBean.setMovieData(rs.getString("movieData"));
@@ -229,7 +229,7 @@ public class BoardDAO {
 				boardBean.setRe_lev(rs.getInt("re_lev"));
 				boardBean.setRe_seq(rs.getInt("re_seq"));
 				boardBean.setIp(rs.getString("ip"));
-				boardBean.setFileName(rs.getString("file"));
+				boardBean.setFileName(rs.getString("fileName"));
 				boardBean.setPubDate(rs.getString("pubDate"));
 				boardBean.setImgLink(rs.getString("imgLink"));
 				boardBean.setMovieData(rs.getString("movieData"));
@@ -270,7 +270,7 @@ public class BoardDAO {
 				boardBean.setUser_id(rs.getString("user_id"));
 				boardBean.setDate(rs.getString("date"));
 				boardBean.setReadcount(rs.getInt("readcount"));
-				boardBean.setFileName(rs.getString("file"));
+				boardBean.setFileName(rs.getString("fileName"));
 				boardBean.setPubDate(rs.getString("pubDate"));
 				boardBean.setImgLink(rs.getString("imgLink"));
 				boardBean.setMovieData(rs.getString("movieData"));
@@ -300,15 +300,17 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardBean.getBoard_num());
 			rs = pstmt.executeQuery();
-			
+			System.out.println("여기 넘어왓떵 ");
 			if(rs.next()) {
+				System.out.println("데이터 넘어와떵 ! ");
 				if(boardBean.getUser_id().equals(rs.getString("user_id"))) {
-					sql = "update board_list set content=?, title=?, selectType=? where board_num=?";
+					sql = "update board_list set content=?, title=?, selectType=?, fileName=? where board_num=?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, boardBean.getContent());
 					pstmt.setString(2, boardBean.getTitle());
 					pstmt.setString(3, boardBean.getSelectType());
-					pstmt.setInt(4, boardBean.getBoard_num());
+					pstmt.setString(4, boardBean.getFileName());
+					pstmt.setInt(5, boardBean.getBoard_num());
 					
 					check = pstmt.executeUpdate();
 					
@@ -328,6 +330,28 @@ public class BoardDAO {
 		}
 		
 		
+		return check;
+	}
+	
+	
+	// updateReadCount(num) 글 조회수 올리기 메소드
+	public int updateReadCount(int board_num) {
+		int check = -1;
+		try {
+			// 디비연결
+			conn = getConnection();
+			sql = "update board_list set readcount = readcount+1 where board_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num); 	// ? 채우기
+			check = pstmt.executeUpdate();
+			
+			System.out.println("글 조회수 증가 메소드 : "+check);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
 		return check;
 	}
 	

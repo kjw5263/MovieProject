@@ -11,6 +11,7 @@
 <link href="../css/default.css" rel="stylesheet" type="text/css">
 <link href="../css/boardList.css" rel="stylesheet" type="text/css">
 <script src="../js/jquery-3.6.0.js"></script>
+<script src="../js/logoutCheck.js"></script>
 <script type="text/javascript">
 
 </script>
@@ -21,12 +22,12 @@
 	<div class="logo"><a href="../member/main.jsp"><img src="../img/movie.png"></a></div>
 	
 	</header>
-	
+	<div><a href="../member/logout.jsp" id="logout" onclick="return logoutCheck()">로그아웃</a> | <a href="../member/beforeMyInfo.jsp">회원정보 조회</a></div>
 	<nav>
 	<ul>
 		<li><a href="../member/main.jsp">HOME</a></li>
-		<li><a href="#">리뷰게시판</a></li>
-		<li><a href="#">무슨게시판</a></li>
+		<li><a href="boardList.jsp">리뷰게시판</a></li>
+		<li><a href="theatherMap.html">영화관 검색</a></li>
 		<li><a href="#">Contact Us</a></li>
 	</ul>
 </nav>
@@ -85,9 +86,9 @@
 				<tr>
 					<td><%=bb.getBoard_num() %></td>
 					<td>
-						<%if(bb.getSelectType().equals("1")) {%> 추천해요
-						<%} else if(bb.getSelectType().equals("0")){ %>그저그래요
-						<%} else if(bb.getSelectType().equals("-1")) {%> 별로예요
+						<%if(bb.getSelectType().equals("1")) {%> <span style="color:green">추천해요</span>
+						<%} else if(bb.getSelectType().equals("0")){ %><span style="color:grey">그저그래요</span>
+						<%} else if(bb.getSelectType().equals("-1")) {%> <span style="color:orange">별로예요</span>
 						<% }%></td>
 					<td>
 						<%
@@ -114,7 +115,8 @@
 	
 	%>
 	</table>
-	
+	<br><br>
+	<div class="pageNumber">
 	<%
 		////////////////////////////////////////////////////
 		// 페이징 처리 - 하단부 페이지 링크
@@ -126,7 +128,7 @@
 			int pageCount = cnt/pageSize + (cnt % pageSize == 0? 0:1);
 			
 			// 한 화면에 보여줄 페이지 번호의 개수 (페이지 블록 )
-			int pageBlock = 1;
+			int pageBlock = 5;
 			
 			// 페이지 블럭의 시작페이지 번호
 			// ex) 1~10 페이지 : 1, 11~20페이지 : 11, 21~20 패이지 : 21
@@ -143,7 +145,8 @@
 			// 이전
 			if(startPage > pageBlock){
 				%>
-				 <a href="boardList.jsp?pageNum=<%=startPage - pageBlock%>">[이전]</a>
+				
+				<a href="boardList.jsp?pageNum=<%=startPage - pageBlock%>">[이전]</a>
 				
 				<%
 			}
@@ -152,10 +155,10 @@
 			// 숫자 1...10
 			for(int i=startPage; i<=endPage; i++){
 				%>
-					<a href="boardList.jsp?pageNum=<%=i %>"
-						style="text-decoration:none;">[ <%=i %> ] </a>
+					<span class="spanNum"><a href="boardList.jsp?pageNum=<%=i %>" style="text-decoration:none;">[ <%=i %> ] </a></span>	
 				<%
 			}
+
 			
 			// 다음 (기존의 페이지 블럭보다 페이지의 수가 많을 때)
 			if(endPage <  pageCount) {
@@ -167,7 +170,7 @@
 			
 		}
 	%>
-	
+	</div>
 	</div>
 	
 	
@@ -177,8 +180,7 @@
 	
 	</div>
 	
-	
-		<footer>
+	<footer>
 	
 	<hr>
 	<div id="copy">

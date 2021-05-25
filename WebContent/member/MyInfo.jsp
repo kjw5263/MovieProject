@@ -12,6 +12,38 @@
 <script src="../js/jquery-3.6.0.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="../js/address.js"></script>
+<script src="../js/logoutCheck.js"></script>
+<style>
+
+.infoUl {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #aaaaaa;
+  border-radius : 10px;
+}
+.infoNav a {
+  text-decoration: none;
+  display: block;
+  padding: 15px;
+  background-color: #aaa;
+  
+}
+
+
+.infoNav span {
+  text-decoration: none;
+  display: block;
+  padding: 15px;
+  background-color: #aaa;
+}
+
+.goMain {
+	position :relative;
+}
+
+</style>
 
 <!-- 이메일 중복체크 팝업 -->
 <!-- <script src="../js/joinCheck.js"></script> -->
@@ -156,21 +188,19 @@ function onDelete() {
 
 %>
 	
-	<a href="logout.jsp">로그아웃</a>
-
-<a href="beforeMyInfo.jsp">회원정보 조회</a>
+<div><a href="logout.jsp" id="logout" onclick="return logoutCheck()">로그아웃</a> | <a href="beforeMyInfo.jsp">회원정보 조회</a></div>
 <nav>
 	<ul>
 		<li><a href="main.jsp">HOME</a></li>
 		<li><a href="../board/boardList.jsp">리뷰게시판</a></li>
-		<li><a href="#">무슨게시판</a></li>
+		<li><a href="../board/theatherMap.html">영화관 검색</a></li>
 		<li><a href="#">Contact Us</a></li>
 	</ul>
 </nav>
 
 <br><br>
-	<nav>
-		<ul>
+	<nav class="infoNav">
+		<ul class="infoUl">
 		  <li id="list1"><span>회원정보 수정</span></li>
 		  <li id="list2"><span>비밀번호 변경</span></li>
 		  <li id="list3"><span>회원 탈퇴</span></li>
@@ -206,7 +236,7 @@ function onDelete() {
 		
 		
 		
-		<br><br><br><br><br><br>
+		<br><br>
 		
 		
 		
@@ -270,7 +300,7 @@ function onDelete() {
 
 
 
-	<footer>
+<footer>
 	
 	<hr>
 	<div id="copy">

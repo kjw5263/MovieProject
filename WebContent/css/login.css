@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.loginAll {
+	display: table;
+	margin-top: 60px;
+	 margin-left: auto;
+	  margin-right: auto;
+}
+
+
+.loginTitle,
+.login-Form, 
+.loginButton,
+.join-p-tag {
+	margin:20px;
+	display: table; margin-left: auto; margin-right: auto;
+}

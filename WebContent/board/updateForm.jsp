@@ -9,7 +9,7 @@
 <title>리뷰 작성하기</title>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 <link href="../css/default.css" rel="stylesheet" type="text/css">
-
+<script src="../js/logoutCheck.js"></script>
 
 </head>
 <body>
@@ -17,6 +17,15 @@
 	<div class="logo"><a href="../member/main.jsp"><img src="../img/movie.png"></a></div>
 	
 	</header>
+	<div><a href="../member/logout.jsp" id="logout" onclick="return logoutCheck()">로그아웃</a> | <a href="../member/beforeMyInfo.jsp">회원정보 조회</a></div>
+	<nav>
+	<ul>
+		<li><a href="../member/main.jsp">HOME</a></li>
+		<li><a href="boardList.jsp">리뷰게시판</a></li>
+		<li><a href="theatherMap.html">영화관 검색</a></li>
+		<li><a href="#">Contact Us</a></li>
+	</ul>
+</nav>
 <%
 	String user_id = (String)session.getAttribute("user_id");
 	int board_num = Integer.parseInt(request.getParameter("board_num"));
@@ -33,7 +42,7 @@
 
 
 %>
-	<form action="updatePro.jsp?pageNum=<%=pageNum %>" name="fr" method="post">
+	<form action="updatePro.jsp?pageNum=<%=pageNum %>" name="fr" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="board_num" value="<%=boardBean.getBoard_num() %>">
 		<input type="hidden" name="user_id" value="<%=boardBean.getUser_id()%>">
 		<select name="selectType">
@@ -62,7 +71,7 @@
 	</form>
 	
 	
-		<footer>
+<footer>
 	
 	<hr>
 	<div id="copy">

@@ -1,29 +1,43 @@
 @charset "UTF-8";
 
+.logo {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+a {
+	text-decoration: none;
+	color: black; 
+	font-weight : 700;
+}
+a:hover {
+	color:red;
+}
+
 * {
 	font-family: 'Nanum Gothic', sans-serif;
 }
 
-a{
-	text-decoration: none;
+nav {
+	padding-top:10px;
 }
 
 
-ul {
+nav li{
+	
+	display: inline;
+	float:left;
+}
+
+nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #dddddd;
   border-radius : 10px;
-}
 
-nav li{
-	display: inline;
-	float:left;
-	
 }
-
 nav a {
   text-decoration: none;
   display: block;

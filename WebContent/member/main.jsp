@@ -8,6 +8,40 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 <link href="../css/default.css" rel="stylesheet" type="text/css">
+<link href="../css/main.css" rel="stylesheet" type="text/css">
+<script src="../js/logoutCheck.js"></script>
+<script src="../js/jquery-3.6.0.js"></script>
+<script src="../js/jquery.innerfade.js"></script>
+<style>
+
+
+</style>
+<script type="text/javascript">
+	$(function() {
+		$.ajax({
+			type:'get',
+			url:'../json/recommandMovie.json',
+			dataType:'json',
+			success:function(data){
+				$.each(data, function(){
+
+					var t = "";
+					t += '<li><img class="posterImg" src="' + this.imglink + '"></li>';
+					
+					$('.slidePage').append(t);
+					
+					
+				});
+				$('.slidePage').innerfade({
+					animationtype: "fade",
+					speed:500,
+					type:"random"
+				});
+				
+			}
+		});
+	});
+</script>
 </head>
 <body>
 
@@ -33,20 +67,30 @@
 
 
 
-<a href="logout.jsp">로그아웃</a>
+<div class="infoTag"><a href="logout.jsp" id="logout" onclick="return logoutCheck()">로그아웃</a> | 
 
-<a href="beforeMyInfo.jsp">회원정보 조회</a>
-<h4><%=user_nickname %>님, 환영합니다.</h4>
+<a id="memberJoin" href="beforeMyInfo.jsp">회원정보 조회</a> </div>
 <nav>
 	<ul>
 		<li><a href="main.jsp">HOME</a></li>
 		<li><a href="../board/boardList.jsp">리뷰게시판</a></li>
-		<li><a href="#">무슨게시판</a></li>
-		<li><a href="#">Contact Us</a></li>
+		<li><a href="../board/theatherMap.html">영화관 검색</a></li>
+		<li><a href="../mail/mailForm.jsp">Contact Us</a></li>
 	</ul>
 </nav>
 
 
+
+<div class="welcome"><h1><%=user_nickname %>님, 환영합니다!</h1></div>
+<div class="howabout"><h3>오늘은 이런 영화, 어떠세요?</h3></div>
+
+<div class="divPage" >
+	<ul class="slidePage"> 
+	
+	</ul>
+</div>
+	
+	
 <footer>
 	
 	<hr>
