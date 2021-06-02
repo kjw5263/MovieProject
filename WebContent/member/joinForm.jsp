@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>마무다(MAMUDA) 회원가입</title>
 <link href="../css/default.css" rel="stylesheet" type="text/css">
-
+<link href="../css/login.css" rel="stylesheet" type="text/css">
 
 <!--  다음 우편번호 API -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -118,7 +118,8 @@ function submitCheck() {
 </header>
 	
 	
-	<h2> 회원가입 </h2>
+	<div class="joinForm">
+	<div class="joinFormTitle"><h2> 회원가입 </h2></div>
 	<form action="joinPro.jsp" method="post" name="joinfr" onsubmit="return submitCheck()">
 <!-- 	<input type="hidden" name="privacy_agree" value="1"> -->
 	<input type="text" name="user_id"  id="user_id" placeholder="아이디" >
@@ -144,15 +145,26 @@ function submitCheck() {
 	
 	<!-- 나중에 주의할 사항 : 로그인창에서 바로 회원가입 창으로 진입한경우 back() 하면 어떻게 되나? 
 		-> 로그인  페이지로 이동 됨  -->
-	<input type="button" value="취소" onclick="history.back()"> 
-	<input type="submit" value="가입하기">
+	<div class="joinFormBtn"><input type="button" value="취소" onclick="history.back()"> 
+	<input type="submit" value="가입하기"></div>
 	
 	
 	</form>
+	</div>
 	
 	
+	<footer>
 	
-	<jsp:include page="../inc/footer.jsp" />
+	<hr>
+	<div id="copy">
+	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
+	 Copyright (c) 2021. Ma Movie Diary. All rights reserved <br>
+	 </div>
+	<div id="social">
+	<a href="https://www.instagram.com/ddi5niii/"><img src="../img/instagram-2.png" alt="instagram" ></a>
+	<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
+	</div>
+	</footer>
 	
 </body>
 </html>

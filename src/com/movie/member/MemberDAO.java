@@ -288,7 +288,7 @@ public class MemberDAO {
 			
 			if(rs.next()) {
 				// 해당하는 아이디가 있을 때! 입력한 비번 맞는지 확인하기
-				if(rs.getString("user_pw").equals(memberBean.getUser_pw())) {
+				if(memberBean.getUser_pw().equals(rs.getString("user_pw")) ) {
 					// 해당하는 아이디가 맞고, 비번이 맞을 때 -> 수정해주기
 						sql = "update user_info set user_name=?, user_nickname=?, zonecode=?, addr=? where user_id=?";
 						pstmt = conn.prepareStatement(sql);
@@ -331,7 +331,7 @@ public class MemberDAO {
 			System.out.println("사용자 아이디느??  " + memberBean.getUser_id());
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				if(rs.getString("user_pw").equals(memberBean.getUser_pw())) {
+				if(memberBean.getUser_pw().equals(rs.getString("user_pw"))) {
 					// 비밀번호 일치하기 때문에 변경해주기
 					sql = "update user_info set user_pw=? where user_id=?";
 					pstmt = conn.prepareStatement(sql);

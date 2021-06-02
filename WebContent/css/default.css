@@ -5,6 +5,7 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+
 a {
 	text-decoration: none;
 	color: black; 
@@ -14,8 +15,10 @@ a:hover {
 	color:red;
 }
 
-* {
+*:not(h1){
 	font-family: 'Nanum Gothic', sans-serif;
+/* 	font-size: 18px; */
+	line-height: 2.1;
 }
 
 nav {
@@ -27,6 +30,8 @@ nav li{
 	
 	display: inline;
 	float:left;
+	margin:auto;
+	
 }
 
 nav ul {
@@ -60,6 +65,8 @@ footer {
 	padding-top: 100px;
 	padding-bottom : 100px;
 	color:lightgrey;
+	font-size: 16px;
+	line-height: 2.0;
 }
 
 
@@ -150,7 +157,7 @@ input[type="password"]{
 textarea {
 	color : #666;
 	background : none;
-	width : 300px;
+	width : 500px;
 	border: 2px solid #cccccc;
 	border-radius: 10px;
 	margin: 10px auto;

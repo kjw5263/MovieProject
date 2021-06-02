@@ -11,12 +11,10 @@
 
 
 <%
-
 	// 로그아웃 버튼 누를 시 세션 초기화 invalidate()
 	session.invalidate();
 	System.out.println("[logout.jsp] 세션 초기화 성공");
 
-	
 %>
 
 <script type="text/javascript">

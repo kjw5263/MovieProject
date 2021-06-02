@@ -11,7 +11,11 @@
 .loginTitle,
 .login-Form, 
 .loginButton,
-.join-p-tag {
+.join-p-tag,
+.joinForm,
+.joinFormTitle,
+.joinFormBtn{
 	margin:20px;
 	display: table; margin-left: auto; margin-right: auto;
 }
+

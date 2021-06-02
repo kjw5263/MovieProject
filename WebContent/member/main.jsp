@@ -12,11 +12,8 @@
 <script src="../js/logoutCheck.js"></script>
 <script src="../js/jquery-3.6.0.js"></script>
 <script src="../js/jquery.innerfade.js"></script>
-<style>
-
-
-</style>
 <script type="text/javascript">
+	/* 메인 화면의 이미지 받아오기 */
 	$(function() {
 		$.ajax({
 			type:'get',
@@ -24,20 +21,17 @@
 			dataType:'json',
 			success:function(data){
 				$.each(data, function(){
-
 					var t = "";
 					t += '<li><img class="posterImg" src="' + this.imglink + '"></li>';
-					
 					$('.slidePage').append(t);
-					
-					
 				});
+				
+				/* 이미지 애니매이션 주기 */
 				$('.slidePage').innerfade({
 					animationtype: "fade",
 					speed:500,
 					type:"random"
 				});
-				
 			}
 		});
 	});
@@ -47,8 +41,7 @@
 
 <header>
 	<div class="logo"><a href="main.jsp"><img src="../img/movie.png"></a></div>
-	
-	</header>
+</header>
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -66,10 +59,7 @@
 %>
 
 
-
-<div class="infoTag"><a href="logout.jsp" id="logout" onclick="return logoutCheck()">로그아웃</a> | 
-
-<a id="memberJoin" href="beforeMyInfo.jsp">회원정보 조회</a> </div>
+<div class="infoTag"><a href="logout.jsp" id="logout" onclick="return logoutCheck()">로그아웃</a> | <a id="memberJoin" href="beforeMyInfo.jsp">회원정보 조회</a> </div>
 <nav>
 	<ul>
 		<li><a href="main.jsp">HOME</a></li>
@@ -80,19 +70,19 @@
 </nav>
 
 
-
 <div class="welcome"><h1><%=user_nickname %>님, 환영합니다!</h1></div>
 <div class="howabout"><h3>오늘은 이런 영화, 어떠세요?</h3></div>
 
+
+<!---------------  위 script에서 ajax로 사진 받아와 뿌려주는 영역 ---------------->
 <div class="divPage" >
 	<ul class="slidePage"> 
-	
 	</ul>
 </div>
 	
 	
+<!------------------------------헤더------------------------------------->
 <footer>
-	
 	<hr>
 	<div id="copy">
 	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
@@ -102,7 +92,7 @@
 	<a href="https://www.instagram.com/ddi5niii/"><img src="../img/instagram-2.png" alt="instagram" ></a>
 	<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
 	</div>
-	</footer>
+</footer>
 
 
 </body>

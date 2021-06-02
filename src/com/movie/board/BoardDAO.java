@@ -40,13 +40,13 @@ public class BoardDAO {
 			
 			conn = ds.getConnection();
 			
-			System.out.println("[MemberDAO] getConn() : 드라이버 로드, DB연결 성공 ");
-			System.out.println("[MemberDAO] conn : " + conn);
+			System.out.println("[BoardDAO] getConn() : 드라이버 로드, DB연결 성공 ");
+			System.out.println("[BoardDAO] conn : " + conn);
 		} catch (NamingException e) {
-			System.out.println("[MemberDAO] getConn() : " + e.getMessage());
+			System.out.println("[BoardDAO] getConn() : " + e.getMessage());
 			//e.printStackTrace();
 		} catch (SQLException e) {
-			System.out.println("[MemberDAO] getConn() : " + e.getMessage());
+			System.out.println("[BoardDAO] getConn() : " + e.getMessage());
 			//e.printStackTrace();
 		}
 		
@@ -63,17 +63,18 @@ public class BoardDAO {
 			if(pstmt != null) pstmt.close();
 			if(conn != null) conn.close();
 		} catch (SQLException e) {
-			System.out.println("[MemberDAO] closeDB() : "+ e.getMessage());
+			System.out.println("[BoardDAO] closeDB() : "+ e.getMessage());
 		}
 	}
 	
 	
 	
 	
-	/* insertBoard() : 게시판 글쓰기 메소드 */
+	/******************** insertBoard() : 게시판 글쓰기 메소드 *******************/
 	public int insertBoard(BoardBean boardBean) {
 		int check = -1;
 		int board_num = 0;
+		
 		try {
 			conn = getConnection();
 			sql = "select user_id from user_info where user_id=?";
@@ -87,10 +88,11 @@ public class BoardDAO {
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
 				
+				// 글 번호 자동으로 +1 해주기
 				if(rs.next()) {
 					board_num = rs.getInt(1)+1;
 				}
-				System.out.println("글 번호 : "+ board_num);
+				System.out.println("[BoardDAO] insertBoard() 글 번호 : "+ board_num);
 				//글번호,유형,제목,내용,사용자아이디,날짜now(),조회수,글ref,lev,seq,ip,file
 				sql = "insert into board_list values(?,?,?,?,?,now(),?,?,?,?,?,?,?,?,?,?)";
 				pstmt = conn.prepareStatement(sql);
@@ -114,13 +116,13 @@ public class BoardDAO {
 				check = pstmt.executeUpdate();
 				
 				if(check == 1) {
-					System.out.println("SQL 실행 완료 : 글쓰기 완료 ");
+					System.out.println("[insertBoard()] SQL 실행 완료 : 글쓰기 완료 ");
 				}else{
-					System.out.println("SQL 글쓰기 실패 ");
+					System.out.println("[insertBoard()] SQL 글쓰기 실패 ");
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("SQL 실행 실패 : 글쓰기 실패 " + e.getMessage());
+			System.out.println("[insertBoard()] SQL 실행 실패 : 글쓰기 실패 " + e.getMessage());
 			//e.printStackTrace();
 		}finally {
 			closeDB();
@@ -131,7 +133,7 @@ public class BoardDAO {
 	}
 	
 	
-	
+	/******************** getBoardCount() : 게시판 전체 게시물 개수 받아오기 *******************/
 	public int getBoardCount() {
 		int cnt = 0;
 		
@@ -145,17 +147,18 @@ public class BoardDAO {
 				cnt = rs.getInt(1);
 			}
 			
-			System.out.println("SQL 구문 실행완료");
-			System.out.println("글 개수 : " + cnt + "개");
+			System.out.println("[getBoardCount()] SQL 구문 실행완료 - 게시판 전체 글 개수 : " + cnt);
 		} catch (SQLException e) {
-			System.out.println("[게시판 글 개수]_에러발생");
-			System.out.println(e.getMessage());
+			System.out.println("[getBoardCount()] SQL 구문 실행에러" +e.getMessage());
 		} finally {
 			closeDB();
 		}
 		return cnt;
 	}
 	
+	
+	
+	/******************** getBoardList() : 게시판 전체 게시물 목록 받아오기 *******************/
 	public ArrayList getBoardList() {
 		ArrayList arrList = new ArrayList();
 		BoardBean boardBean = null;
@@ -189,8 +192,7 @@ public class BoardDAO {
 				
 				arrList.add(boardBean);
 			}
-			System.out.println("게시판 모든 정보 저장 완료 ");
-			System.out.println("총 " + arrList.size() + "개");
+			System.out.println("[getBoardList()]게시판 모든 정보 받기 완료, 총 "+arrList.size() );
 		} catch (SQLException e) {
 			System.out.println("개수 가져오기 에러 : "+e.getMessage());
 		} finally {
@@ -201,7 +203,7 @@ public class BoardDAO {
 	}
 	
 	
-	
+	/******************** getBoardList(int, int) : 게시판 전체 게시물 중 특정 행부터 목록 받아오기 *******************/
 	public ArrayList getBoardList(int startRow, int pageSize) {
 		ArrayList arrList = new ArrayList();
 		BoardBean boardBean = null;
@@ -237,10 +239,9 @@ public class BoardDAO {
 				
 				arrList.add(boardBean);
 			}
-			System.out.println("게시판 모든 정보 저장 완료222 ");
-			System.out.println("총 " + arrList.size() + "개");
+			System.out.println("[getBoardList(int, int)] 게시판 특정 페이지 받기 완료, 총 "+arrList.size());
 		} catch (SQLException e) {
-			System.out.println("개수 가져오기 에러 : "+e.getMessage());
+			System.out.println("[getBoardList(int, int)] 가져오기 에러 : "+e.getMessage());
 		} finally {
 			closeDB();
 		}
@@ -249,7 +250,7 @@ public class BoardDAO {
 	}
 	
 	
-	
+	/******************** getBoard(int) : 게시물 선택했을 때 게시물 보기  *******************/
 	public BoardBean getBoard(int board_num) {
 		BoardBean boardBean = null;
 		
@@ -269,6 +270,7 @@ public class BoardDAO {
 				boardBean.setContent(rs.getString("content"));
 				boardBean.setUser_id(rs.getString("user_id"));
 				boardBean.setDate(rs.getString("date"));
+				boardBean.setPubDate(rs.getString("pubDate"));
 				boardBean.setReadcount(rs.getInt("readcount"));
 				boardBean.setFileName(rs.getString("fileName"));
 				boardBean.setPubDate(rs.getString("pubDate"));
@@ -277,7 +279,7 @@ public class BoardDAO {
 				boardBean.setMovieLink(rs.getString("movieLink"));
 			}
 			
-			System.out.println("게시물 가져오기 성공!");
+			System.out.println("[getBoard]게시물 가져오기 성공!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -300,9 +302,8 @@ public class BoardDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardBean.getBoard_num());
 			rs = pstmt.executeQuery();
-			System.out.println("여기 넘어왓떵 ");
+			
 			if(rs.next()) {
-				System.out.println("데이터 넘어와떵 ! ");
 				if(boardBean.getUser_id().equals(rs.getString("user_id"))) {
 					sql = "update board_list set content=?, title=?, selectType=?, fileName=? where board_num=?";
 					pstmt = conn.prepareStatement(sql);
@@ -334,7 +335,7 @@ public class BoardDAO {
 	}
 	
 	
-	// updateReadCount(num) 글 조회수 올리기 메소드
+	/******************** updateReadCount(num) 글 조회수 올리기 메소드 *******************/
 	public int updateReadCount(int board_num) {
 		int check = -1;
 		try {
@@ -391,6 +392,123 @@ public class BoardDAO {
 		
 		
 		return check;
+	}
+	
+	
+	public int insertReply(ReplyBean reBean) {
+		int check = -1;
+		int re_num = 0;
+		
+		try {
+			conn =getConnection();
+			sql = "select * from user_info where user_id=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, reBean.getUser_id());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				sql = "select max(reply_num) from reply_list";
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					re_num = rs.getInt(1)+1;
+				
+					System.out.println("re_num : >>>>" + re_num);
+					
+					sql = "insert into reply_list values(?,?,?,?,now())";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, re_num);
+					pstmt.setInt(2, reBean.getBoard_num());
+					pstmt.setString(3, reBean.getUser_id());
+					pstmt.setString(4, reBean.getReplyTextArea());
+					
+					check = pstmt.executeUpdate();
+					System.out.println("댓글 달기 결과 : "+ check);
+				}
+				
+			} else {
+				check = -1;
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		
+		return check;
+	}
+	
+	
+	
+	public ArrayList<ReplyBean> getReply(int board_num) {
+		ReplyBean reBean = null;
+		ArrayList<ReplyBean> arr = new ArrayList<ReplyBean>();
+		
+		try {
+			conn = getConnection();
+			sql = "select * from reply_list where board_num=? order by reply_num";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				reBean= new ReplyBean();
+				reBean.setReply_num(rs.getInt("reply_num"));
+				reBean.setBoard_num(rs.getInt("board_num"));
+				reBean.setUser_id(rs.getString("user_id"));
+				reBean.setReplyTextArea(rs.getString("replyTextArea"));
+				reBean.setReply_date(rs.getString("reply_date"));
+				
+				arr.add(reBean);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			closeDB();
+		}
+		
+		
+		
+		return arr;
+	}
+	
+	
+	
+	public int replyDelete(int reply_num) {
+		int check = -1;
+		
+		
+		try {
+			conn = getConnection();
+			sql = "select * from reply_list where reply_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reply_num);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				sql = "delete from reply_list where reply_num=?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, reply_num);
+				check = pstmt.executeUpdate();
+			} else {
+				check =0 ;
+			}
+			
+			System.out.println("삭제결과 : " +check);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeDB();
+		}
+		
+		return check;
+		
 	}
 	
 }

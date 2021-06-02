@@ -2,7 +2,7 @@
 
  table {
  	margin-top : 100px;
-    width: 600px;
+    width: 1000px;
     border: 1px solid #bbbbbb;
     border-collapse: collapse;
     display: table; margin-left: auto; margin-right: auto;
@@ -15,7 +15,51 @@
   	font-weight:bold;
   	background : #eeeeee;
   }
-  
-  .content-btn {
-  	display: table; margin-left: auto; margin-right: auto;
+  #result-table {
+  	width: 100%;
   }
+  .content-btn {
+  display: table; margin-left: auto; margin-right: auto;
+  }
+  
+  .title {
+  	width: 100px;
+  }
+  
+  .title-next {
+  	width:200px;
+  }
+  
+  .poster {
+  	width: 250px;
+  	text-align : center;
+  }
+  
+  .content-td {
+  	padding : 20px;
+  }
+  
+  #noReply {
+  	text-align: center;
+  	height:50px;
+  }
+  
+  .replyTextArea {
+   float:left;
+  	 margin-right:10px;
+  }
+  .reDeleteBtn {
+  	float: right;
+  } 
+  
+  .Retitle {
+  	text-align : center;
+  	background-color : #eeeeee;
+  }
+  
+   .replyContent {
+   text-align : center;
+   }
+   
+   
+  

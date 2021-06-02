@@ -12,63 +12,66 @@
 <link href="../css/boardList.css" rel="stylesheet" type="text/css">
 <script src="../js/jquery-3.6.0.js"></script>
 <script src="../js/logoutCheck.js"></script>
-<script type="text/javascript">
 
-</script>
 </head>
 <body>
 
 <header>
 	<div class="logo"><a href="../member/main.jsp"><img src="../img/movie.png"></a></div>
-	
-	</header>
-	<div><a href="../member/logout.jsp" id="logout" onclick="return logoutCheck()">로그아웃</a> | <a href="../member/beforeMyInfo.jsp">회원정보 조회</a></div>
-	<nav>
+</header>
+
+<div><a href="../member/logout.jsp" id="logout" onclick="return logoutCheck()">로그아웃</a> | <a href="../member/beforeMyInfo.jsp">회원정보 조회</a></div>
+<nav>
 	<ul>
 		<li><a href="../member/main.jsp">HOME</a></li>
 		<li><a href="boardList.jsp">리뷰게시판</a></li>
 		<li><a href="theatherMap.html">영화관 검색</a></li>
-		<li><a href="#">Contact Us</a></li>
+		<li><a href="../mail/mailForm.jsp">Contact Us</a></li>
 	</ul>
 </nav>
 
-<div id="left">
+
+
 	<%
+		/***********************************세션 제어*******************************************/
 		request.setCharacterEncoding("UTF-8");
 		String user_id = (String)session.getAttribute("user_id");
 		System.out.println("[boardList.jsp] 아이디 세션 : " + user_id);
 		if(user_id == null){
 			System.out.println("[boardList.jsp] 로그인 세션 만료");
-			response.sendRedirect("../member/loginForm.jsp");
+			response.sendRedirect("../member/main.jsp");
 			session.invalidate();
 		}
-		
 		else if(user_id != null){
 			System.out.println("[boardList.jsp] 로그인 세션 있음");
-	%> 
-				<input type="button" value="글쓰기" onclick="location.href='writeForm.jsp'">
-			<%
+			%> <input type="button" value="글쓰기" onclick="location.href='writeForm.jsp'"> <%
 		}
 
 
+		/***********************************총 게시물 개수 갖고오는 메소드 getBoardCount*******************************************/
 		BoardDAO bdao = new BoardDAO();
 		int cnt  = bdao.getBoardCount();
 
+		// 한 페이지에 보여줄 행의 개수
 		int pageSize = 5;
 		
+		// pageNum : 현재 페이지 번호 (String)
 		String pageNum = request.getParameter("pageNum");
 		if(pageNum == null){
 			pageNum = "1";
 		}
 		
-		
+		// currentPage : 현재 페이지 번호 (int)
 		int currentPage = Integer.parseInt(pageNum);
 		int startRow = (currentPage-1)*pageSize+1;
 		int endRow = currentPage * pageSize;
 		
+		// 5개씩 가져온 게시물을 ArrayList로 받는다. (ex. 1번째 게시물 부터 5개 가져옴)
 		ArrayList boardList = bdao.getBoardList(startRow, pageSize);
 
 	%>
+		<h1>리뷰 게시판</h1>
+		<h2>총 <b style="color:#7980ff"><%=cnt %>개</b>의 리뷰가 있습니다.</h2>
 		<table>
 			<tr class="table-title">
 				<td>번호</td>
@@ -82,45 +85,39 @@
 	<%
 		for(int i=0; i<boardList.size() ; i++) {
 			BoardBean bb = (BoardBean)boardList.get(i);
+			String user_id2 = bb.getUser_id();
+			if(user_id2 == null){
+				user_id2 = "(알 수 없는 사용자)";
+			}
 			%>
 				<tr>
 					<td><%=bb.getBoard_num() %></td>
 					<td>
-						<%if(bb.getSelectType().equals("1")) {%> <span style="color:green">추천해요</span>
-						<%} else if(bb.getSelectType().equals("0")){ %><span style="color:grey">그저그래요</span>
-						<%} else if(bb.getSelectType().equals("-1")) {%> <span style="color:orange">별로예요</span>
+						<%if(bb.getSelectType().equals("1")) {%> <span style="color:#7de848; font-weight:bold" >추천해요</span>
+						<%} else if(bb.getSelectType().equals("0")){ %><span style="color:grey; font-weight:bold">그저그래요</span>
+						<%} else if(bb.getSelectType().equals("-1")) {%> <span style="color:orange; font-weight:bold">별로예요</span>
 						<% }%></td>
-					<td>
-						<%
-							//int wid = 0;
-							//if(bb.getRe_lev() > 0){
-								//wid = 15 * bb.getRe_lev();
-						%>
-<%-- 						<img src="level.gif" height="15" width="<%=wid %>"> --%>
-<!-- 						<img src="re.gif"> -->
-						<%
-						
-							//}
-						%>
-						<a href="content.jsp?board_num=<%=bb.getBoard_num() %>&pageNum=<%=pageNum %>"><%=bb.getTitle() %></a>
-						
-					</td>
-					<td><%=bb.getUser_id() %></td>
+					<td><a href="content.jsp?board_num=<%=bb.getBoard_num() %>&pageNum=<%=pageNum %>"><%=bb.getTitle() %></a></td>
+					<td><%=user_id2 %></td>
 					<td><%=bb.getDate() %></td>
 					<td><%=bb.getReadcount() %>
 				</tr>
 			<%
 		}
 		
-	
 	%>
 	</table>
+	
+	
 	<br><br>
+	
+	
+	
 	<div class="pageNumber">
 	<%
-		////////////////////////////////////////////////////
+		/***********************************페이징 처리*******************************************/
 		// 페이징 처리 - 하단부 페이지 링크
-		// cnt : 글 개수
+		// cnt : 전체 글 개수
 		if(cnt != 0){	// 글이 있을 때 표시
 			// 전체 페이지 수 계산
 			// ex) 총 50개 -> 한페이지당 10개 출력, 5개
@@ -128,7 +125,7 @@
 			int pageCount = cnt/pageSize + (cnt % pageSize == 0? 0:1);
 			
 			// 한 화면에 보여줄 페이지 번호의 개수 (페이지 블록 )
-			int pageBlock = 5;
+			int pageBlock = 10;
 			
 			// 페이지 블럭의 시작페이지 번호
 			// ex) 1~10 페이지 : 1, 11~20페이지 : 11, 21~20 패이지 : 21
@@ -141,13 +138,10 @@
 			}
 			
 			
-			
 			// 이전
 			if(startPage > pageBlock){
 				%>
-				
 				<a href="boardList.jsp?pageNum=<%=startPage - pageBlock%>">[이전]</a>
-				
 				<%
 			}
 			
@@ -165,20 +159,12 @@
 				%>
 				<a href="boardList.jsp?pageNum=<%=startPage + pageBlock%>">[다음]</a>
 				<%
-				
 			}
-			
 		}
 	%>
 	</div>
-	</div>
 	
 	
-	<div id="right">
-	
-	
-	
-	</div>
 	
 	<footer>
 	

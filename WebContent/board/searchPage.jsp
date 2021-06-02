@@ -81,12 +81,9 @@
 	
 	<form action="searchPage.jsp?query=<%=query%>" method="get" onsubmit="return insertKeyword()">
 	<input type="text" name="query" id="query" placeholder="영화 제목을 검색해보세요.">
-	<input type="submit" >
+	<input type="submit" value="검색">
 	
 	</form>
-	
-	<br><br><br>
-	
 	
 	<% 
 	
@@ -183,8 +180,8 @@
 	        				actor = actor.substring(0, actor.length()-1);
 	        			}
 	        			
-	        			director = director.replace("|", " | ");
-	        			actor= actor.replace("|"," | ");
+	        			director = director.replace("|", " <b>|</b> ");
+	        			actor= actor.replace("|"," <b>|</b> ");
 	        			userRating = jsonItem.get("userRating").toString();
 	        			
 	        			if(img == ""){
@@ -212,11 +209,11 @@
 							  <%
 							  	if(subtitle == ""){
 							  		%>
-							  		<td id="title"><a id="movieLink" href="<%=link%>" target="_blank"><b><%=title %></b></a><%="<br>감독 - "+director + "<br>출연 - " + actor+"<br>평점 - " + userRating%></td>
+							  		<td id="title"><a id="movieLink" href="<%=link%>" target="_blank"><b><%=title %></b></a><%="<br><b>감독</b> - "+director + "<br><b>출연</b> - " + actor+"<br><b>평점</b> - " + userRating%></td>
 							  		<%
 							  	} else {
 							  		%>
-							  		<td id="title"><a id="movieLink" href="<%=link%>" target="_blank"><b><%=title %></b></a><%=" ("+subtitle+ ")<br>감독 - "+director + "<br>출연 - " + actor+"<br>평점 - " + userRating%></td>
+							  		<td id="title"><a id="movieLink" href="<%=link%>" target="_blank"><b><%=title %></b></a><%=" ("+subtitle+ ")<br><b>감독</b> - "+director + "<br><b>출연</b> - " + actor+"<br><b>평점</b> - " + userRating%></td>
 							  		<%
 							  	}
 							  

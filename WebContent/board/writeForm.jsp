@@ -7,6 +7,7 @@
 <title>리뷰 작성하기</title>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 <link href="../css/default.css" rel="stylesheet" type="text/css">
+<link href="../css/writeForm.css" rel="stylesheet" type="text/css">
 <script src="../js/logoutCheck.js"></script>
 <script>
 	// 영화 검색 팝업 여는 창
@@ -50,7 +51,7 @@
 		<li><a href="../member/main.jsp">HOME</a></li>
 		<li><a href="boardList.jsp">리뷰게시판</a></li>
 		<li><a href="theatherMap.html">영화관 검색</a></li>
-		<li><a href="#">Contact Us</a></li>
+		<li><a href="../mail/mailForm.jsp">Contact Us</a></li>
 	</ul>
 </nav>
 
@@ -63,6 +64,8 @@
 
 
 %>
+
+<div class="writeForm">
 	<form action="writePro.jsp" name="fr" method="post" enctype="multipart/form-data" onsubmit="return onInputCheck()">
 		<input type="hidden" name="user_id" value="<%=user_id%>">
 		<select name="selectType">
@@ -89,7 +92,7 @@
 		
 		<input type="submit" value="작성하기">
 	</form>
-	
+	</div>
 	
 	<footer>
 	

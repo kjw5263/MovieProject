@@ -44,10 +44,10 @@ public class MailSendServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			Properties properties = System.getProperties();
-			properties.put("mail.smtp.starttls.enable", "true"); // gmailÀº ¹«Á¶°Ç true °íÁ¤
-			properties.put("mail.smtp.host", "smtp.gmail.com"); // smtp ¼­¹ö ÁÖ¼Ò
-			properties.put("mail.smtp.auth", "true"); // gmailÀº ¹«Á¶°Ç true °íÁ¤
-			properties.put("mail.smtp.port", "587"); // gmail Æ÷Æ®
+			properties.put("mail.smtp.starttls.enable", "true"); // gmailï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ true ï¿½ï¿½ï¿½ï¿½
+			properties.put("mail.smtp.host", "smtp.gmail.com"); // smtp ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½
+			properties.put("mail.smtp.auth", "true"); // gmailï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ true ï¿½ï¿½ï¿½ï¿½
+			properties.put("mail.smtp.port", "587"); // gmail ï¿½ï¿½Æ®
 			Authenticator auth = new GoogleAuthentication();
 			Session s = Session.getDefaultInstance(properties, auth);
 			//Session s = Session.getdefultInstance(properties, auth);
@@ -61,9 +61,9 @@ public class MailSendServlet extends HttpServlet {
 			message.setContent(content, "text/html;charset=UTF-8");
 			message.setSentDate(new java.util.Date());
 			Transport.send(message);
-			out.println("<h3>¸ŞÀÏÀÌ Á¤»óÀûÀ¸·Î Àü¼ÛµÇ¾ú½À´Ï´Ù.</h3>");
+			out.println("<h3>ë©”ì¼ì´ ì •ìƒì ìœ¼ë¡œ ì „ì†¡ë˜ì—ˆìŠµë‹ˆë‹¤.</h3>");
 		} catch (Exception e) {
-			out.println("SMTP ¼­¹ö°¡ Àß¸ø ¼³Á¤µÇ¾ú°Å³ª, ¼­ºñ½º¿¡ ¹®Á¦°¡ ÀÖ½À´Ï´Ù.");
+			out.println("SMTP ì—ëŸ¬, ë©”ì¼ì„ ì „ì†¡í•  ìˆ˜ ì—†ìŒ.");
 			e.printStackTrace();
 		}
 	}

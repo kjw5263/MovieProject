@@ -29,21 +29,16 @@ public class MovieSearch {
             throw new RuntimeException("검색어 인코딩 실패",e);
         }
 
-
         String apiURL = "https://openapi.naver.com/v1/search/movie.json?query="+text+ "&start=" + start;    // json 결과
-        //String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
-
-
+        
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
-        String responseBody = get(apiURL,requestHeaders);
-
+        String responseBody = get(apiURL,requestHeaders);	//검색 결과 
 
         System.out.println(responseBody);
         
         return responseBody;
-        
         
     }
 

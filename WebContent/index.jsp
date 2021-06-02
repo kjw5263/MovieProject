@@ -10,11 +10,13 @@
 </head>
 <body>
 
+	<!---------------------------- 헤더 부분 ------------------------------------->
 	<header>
 	<div class="logo"><img src="img/movie.png"></div>
 	</header>
 
 	
+	<!---------------------------- 메인 부분 ------------------------------------->
 	<div class="back">
 	<div class="img"><img src="img/cinema.jpg"></div>
 	<div class="text">
@@ -23,18 +25,12 @@
 		<input type="button" id="btn" value="로그인" onclick="location.href='member/loginForm.jsp'">
 		<input type="button" id="btn" value="회원가입" onclick="location.href='member/joinForm.jsp'">
 	</div>
-	
-	
 	</div>
 	
 	
-	
 
-	
-	
-	
+	<!------------------------------ 푸터 부분 ---------------------------------->
 	<footer>
-	
 	<hr>
 	<div id="copy">
 	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>

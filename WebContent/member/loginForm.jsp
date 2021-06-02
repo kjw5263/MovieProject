@@ -12,8 +12,7 @@
 
 <script type="text/javascript">
 
-<!--  처음 들어왔을 때나, 회원가입 취소를 통해 들어왔을 때 자동으로 포커스 주는 방법? -->
-
+/* 아이디, 비밀번호 공백 불가 */
 function login_Check() {
 	var idCheck = document.login_fr.user_id.value;
 	var pwCheck = document.login_fr.user_pw.value;
@@ -28,40 +27,43 @@ function login_Check() {
 		return false;
 	}
 }
-	
-
 </script>
 </head>
 <body>
 
-
+<!--------- 헤더 ---------------->
 <header>
 	<div class="logo"><a href="../index.jsp"><img src="../img/movie.png"></a></div>
-	
 </header>
+
+
 <div class="loginAll">
 <div class="loginTitle"><h1> 로그인 </h1></div>
-<div class="login-Form">
+ <div class="login-Form">
    <form action="loginPro.jsp" method="post" name="login_fr" onsubmit="return login_Check()">
-   
    	<input type="text" name="user_id"  placeholder="아이디" >			<br>
    	<input type="password" name="user_pw"  placeholder="비밀번호" >		<br>
-   	
    	<div class="loginButton"><input type="submit" value="로그인">	</div>
-   	
    	<div class="join-p-tag"><p>처음 방문하셨나요? <a href="joinForm.jsp">회원가입</a></p></div>
-   	
-   	
-   
    </form>
-   
-   </div>
-   
-   </div>
+ </div>
+</div>
    
    
-   
-   	<jsp:include page="../inc/footer.jsp" />
+
+
+<!--------- 푸터 ---------------->
+<footer>
+<hr>
+<div id="copy">
+Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
+ Copyright (c) 2021. Ma Movie Diary. All rights reserved <br>
+ </div>
+<div id="social">
+<a href="https://www.instagram.com/ddi5niii/"><img src="../img/instagram-2.png" alt="instagram" ></a>
+<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
+</div>
+</footer>
 	
 	
 	

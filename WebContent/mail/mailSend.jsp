@@ -33,6 +33,7 @@
 		%>
 			<script type="text/javascript">
 				alert("메일이 정상적으로 전송되었습니다.");
+				location.href="mailForm.jsp"
 			</script>
 		<%
 		//out.println("<h3>메일이 정상적으로 전송되었습니다.</h3>");
@@ -40,6 +41,7 @@
 		%>
 		<script type="text/javascript">
 			alert("메일 전송 실패입니다.");
+			history.back();
 		</script>
 		<%
 // 		out.println("SMTP 서버가 잘못 설정되었거나, 서비스에 문제가 있습니다.");

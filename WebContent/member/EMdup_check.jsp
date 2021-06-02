@@ -16,8 +16,16 @@
 	}
 	
 </script>
+<style type="text/css">
+
+div {
+	display: table; margin-left: auto; margin-right: auto;
+}
+</style>
 </head>
 <body>
+
+
 
 <%
 	request.setCharacterEncoding("UTF-8");
@@ -29,23 +37,28 @@
 	
 	// result = 1이면, 이미 아이디가 존재함
 	if(result == 1 ){
-			out.println("이미 존재하는 이메일 입니다.");
-	} else {
-		out.println("사용 가능한 이메일 입니다.");
 		%>
-			<input type="button" value="이메일 사용하기" onclick="emailFix()">
+			<div><h3><%=user_email %>은 이미 존재하는 이메일 입니다.</h3></div>
+		<%
+	} else {
+		%>
+			<div><h3><%=user_email %>은 사용가능한 이메일 입니다.</h3></div>
+			<div><br><input type="button" value="이메일 사용하기" onclick="emailFix()"></div>
 		<%
 	}
-
 %>
+
+
 <div id="haveTocheck"></div>
-<hr>
 <form action="EMdup_check.jsp" method="post" name="ofr">
 
-	<input type="text" name="user_email" value="<%=user_email %>">
-	<input type="submit" value="중복확인">
+	<div><input type="text" name="user_email" value="<%=user_email %>">
+	<input type="submit" value="중복확인"></div>
 
 </form>
 <hr>
+
+
+
 </body>
 </html>
