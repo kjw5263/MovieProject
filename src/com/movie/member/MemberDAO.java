@@ -80,7 +80,7 @@ public class MemberDAO {
 			conn = getConnection();
 			sql = "select user_pw, user_nickname from user_info where user_id=?";
 			pstmt = conn.prepareStatement(sql);		// 예외 발생 가능
-			
+			System.out.println("아아아 >>> " + memberBean.getUser_id());
 			pstmt.setString(1, memberBean.getUser_id());
 			
 			rs = pstmt.executeQuery();

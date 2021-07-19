@@ -52,7 +52,8 @@
 </table>
 </form>
 
-
-<jsp:include page="../inc/footer.jsp" />
+<!-- footer 시작 -->
+ 		<jsp:include page="../common/footer.jsp" />
+	<!-- footer 끝 -->
 </body>
 </html>

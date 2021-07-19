@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
 <footer>
-	
 	<hr>
 	<div id="copy">
 	Contact  Mail kjw5263@naver.com | Tel 010-9989-5263 | FAX 051-123-456 <br>
@@ -13,3 +19,6 @@
 	<a href="https://www.facebook.com/"><img src="../img/facebook.png" alt="facebook"></a>
 	</div>
 	</footer>
+	
+</body>
+</html>

@@ -37,8 +37,8 @@
 	 Copyright (c) 2021. Ma Movie Diary. All rights reserved <br>
 	 </div>
 	<div id="social">
-	<a href="https://www.instagram.com/ddi5niii/"><img src="img/instagram-2.png" alt="instagram" ></a>
-	<a href="https://www.facebook.com/"><img src="img/facebook.png" alt="facebook"></a>
+	<a href="https://www.instagram.com/ddi5niii/"><img src="./img/instagram-2.png" alt="instagram" ></a>
+	<a href="https://www.facebook.com/"><img src="./img/facebook.png" alt="facebook"></a>
 	</div>
 	</footer>
 </body>
